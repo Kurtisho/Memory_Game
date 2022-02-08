@@ -1,6 +1,6 @@
 package model;
 
-public class MyModel {
+public class Match {
     // delete or rename this class!
 
     public void myMethod() {
