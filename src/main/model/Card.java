@@ -1,7 +1,7 @@
 package model;
 
-public class Match {
-    // delete or rename this class!
+public class Card {
+
 
     public void myMethod() {
 
