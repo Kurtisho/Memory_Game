@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// class represents the testing for the Panel class
 public class PanelTest {
 
     private Panel testPanel;

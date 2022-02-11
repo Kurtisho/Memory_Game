@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// class represents the testing for the Board class
 public class BoardTest {
 
     private ArrayList<Panel> testPanelList;
