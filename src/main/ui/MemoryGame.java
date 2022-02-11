@@ -6,7 +6,8 @@ import model.Panel;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// modelled after ca.ubc.cpsc210.bank.ui.TellerApp
+// modelled after ca.ubc.cpsc210.bank.ui.TellerApp from https://github.students.cs.ubc.ca/CPSC210/TellerApp
+// modelled template and menu
 
 // represents the Memory Game (user interface)
 public class MemoryGame {

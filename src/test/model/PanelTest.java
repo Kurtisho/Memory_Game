@@ -48,6 +48,8 @@ public class PanelTest {
     @Test
     void testGetPosition() {
         assertEquals("1", testPanel.getPosition());
+        Panel testPanel2 = new Panel("B", "3");
+        assertEquals("3", testPanel2.getPosition());
     }
 
     @Test
