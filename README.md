@@ -30,7 +30,7 @@ who can achieve the fastest time.
 
 - As a user, I want to be able to play the game as long as i'd like
 - As a user, I want to be able to see the time spent per game after I quit
-- As a user, I want to choose the size of my board and the letters that are in the game
+- As a user, I want to choose the size of my board and the letters that are used in the game
 - As a user, I want to rate the difficulty of the game
 - As a user, I want to clearly see my previous attempts (keep only for console?)
 
