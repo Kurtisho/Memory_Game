@@ -1,5 +1,5 @@
 package model;
 
-class LevelTest {
+class BoardTest {
     // delete or rename this class!
 }
