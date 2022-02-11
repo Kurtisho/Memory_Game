@@ -78,6 +78,8 @@ public class MemoryGame {
         System.out.println("Board is prepped and ready to play!");
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets up parameter for board inputs
     private void validBoardSize() {
         boolean isInvalid = true;
         System.out.println("Create your own pairs! Enter a number divisible by 4! ");
