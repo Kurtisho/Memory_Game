@@ -41,7 +41,7 @@ public class Board {
     }
 
 
-
+    //getter
     public ArrayList<Panel> getPanelList() {
         return panelList;
     }
@@ -53,7 +53,6 @@ public class Board {
         Panel secondPanel = panelList.get(secondPick);
 
         if (!firstPanel.getLetter().equals(secondPanel.getLetter())) {
-
             firstPanel.setIsFlipped(false);
             secondPanel.setIsFlipped(false);
         }
@@ -70,9 +69,5 @@ public class Board {
         }
         return true;
     }
-
-
-
-
 
 }

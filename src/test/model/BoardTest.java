@@ -104,17 +104,19 @@ public class BoardTest {
         assertTrue(panel2.getIsFlipped());
     }
 
+    // Note: this can fail sometimes but it is 2/16 chance
     @Test
     void testShufflePannels() {
         for (Panel panel : testPanelList) {
             testBoard.getPanelList().add(panel);
         }
-        Board testBoard2 = testBoard;
+        Panel testPanel = testBoard.getPanelList().get(5);
         testBoard.shufflePanels();
         assertEquals(16, testBoard.getPanelList().size());
 
-        //assertNotEquals(testBoard, testBoard2); want to compare the two boards to see if they're different
+        Panel testPanel2 = testBoard.getPanelList().get(5);
 
+        assertNotEquals(testPanel, testPanel2);
 
     }
 

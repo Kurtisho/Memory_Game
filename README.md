@@ -1,4 +1,4 @@
-#  Memory Game
+# Classic Memory Game
 
 ## Synopsis of the game
 
@@ -20,16 +20,18 @@ For instance :
 ## Interests
 
 The reason why I chose to design a memory game was because this was the game
-I grew up with. My cousins and I loved playing this game because 
- we would always like to challenge each other to see who could have the most 
-pairs in a full deck.
+I grew up playing with. My cousins and I loved playing this game because 
+we would always challenge each other to see who could have the most 
+pairs in a full deck. With this game, we won't be competing to see who has the most pairs but rather
+who can achieve the fastest time.
 
 
 ## User Stories
 
 - As a user, I want to be able to play the game as long as i'd like
-- As a user, I want to be able to see the time spent per game after I quit (time added to list)
-- As a user, I want to create my own list of pairs and add them to the game
-- As a user, I want to rate the difficulty of the game (add for each attempt future)
+- As a user, I want to be able to see the time spent per game after I quit
+- As a user, I want to create my own list of pairs and add them to the board panel
+- As a user, I want to rate the difficulty of the game
+- As a user, I want to clearly see my previous attempts (keep only for console?)
 
 

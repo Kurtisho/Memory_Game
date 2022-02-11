@@ -7,16 +7,14 @@ public class Panel {
     private boolean isFlipped;
     private String position;
 
-    private Panel matchingPanel;
-
-    //EFFECTS: creates a panel with a letter and a position
+    //EFFECTS: creates a panel with a letter, position and flip value
     public Panel(String letter, String position) {
         this.letter = letter;
         isFlipped = false;
-        matchingPanel = null;
         this.position = position;
     }
 
+    //getters
     public String getLetter() {
         return letter;
     }
@@ -25,26 +23,18 @@ public class Panel {
         return isFlipped;
     }
 
-    public void setIsFlipped(Boolean isFlipped) {
-        this.isFlipped = isFlipped;
-    }
-
-
-//    //EFFECTS: sets panel to be matching
-//    public void setMatchingPanel(Panel panel) {
-//        this.matchingPanel = panel;
-//        panel.matchingPanel = this;
-//    }
-
     public String getPosition() {
         return position;
+    }
+
+    //setters
+    public void setIsFlipped(Boolean isFlipped) {
+        this.isFlipped = isFlipped;
     }
 
     public void setPosition(String position) {
         this.position = position;
     }
-
-
 
 
 }

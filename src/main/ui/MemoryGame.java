@@ -29,9 +29,7 @@ public class MemoryGame {
     //MODIFIES: this
     //EFFECTS: reads the users inputs
     public void runGame() {
-
         boolean keepRunning = true;
-
         long start = 0;
         long finish = 0;
         long elapsed;
@@ -39,24 +37,19 @@ public class MemoryGame {
         while (keepRunning) {
             displayMenu(); // display main menu
             scanner = new Scanner(System.in);
-
             String input = scanner.nextLine();
-
             if (input.equals("q")) {
                 break;
-
             } else if (input.equals("p")) {
                 prepGame();
                 start = System.currentTimeMillis();
                 playGame();
                 finish = System.currentTimeMillis();
             }
-
             elapsed = finish - start;
             addTime(elapsed);
             keepRunning = playAgain(keepRunning);
         }
-
         showProgress();
         rateGame();
 
@@ -79,13 +72,12 @@ public class MemoryGame {
             board.getPanelList().add(firstPanel);
             board.getPanelList().add(secondPanel);
 
-
         }
         System.out.println("Board is prepped and ready to play!");
     }
 
+    //add guard later !!!
     //EFFECTS: Allows the user to rate the game
-    // later implement for each play through
     private void rateGame() {
         System.out.println("Rate this game from 1-5!");
         System.out.println("5 - Best game ever!");
@@ -127,6 +119,7 @@ public class MemoryGame {
     public void playGame() {
         boolean keepGame = true; // game over?
         board.shufflePanels();
+        System.out.println("\n");
         printBoard();
 
         while (keepGame) {
@@ -144,6 +137,7 @@ public class MemoryGame {
     private void doTurn() {
         selectNumbers(); // player selects 2 numbers
         board.isMatching(firstPick, secondPick); // checks if numbers are matching
+        System.out.println("\n");
         printBoard();
     }
 
@@ -156,13 +150,12 @@ public class MemoryGame {
         System.out.println("Select a Number: ");
         Scanner scan1 = new Scanner(System.in);
 
-
         // break point to check if valid entry
         firstInput = scan1.nextLine();
         firstPick = checkValidNumber(Integer.parseInt(firstInput)); // will get a valid number
         board.revealPanel(firstPick);
+        System.out.println("\n");
         printBoard();
-
 
         System.out.println("Select another Number: ");
         Scanner scan2 = new Scanner(System.in);
@@ -171,6 +164,7 @@ public class MemoryGame {
         secondInput = scan2.nextLine();
         secondPick =  checkValidNumber(Integer.parseInt(secondInput)); // will get a valid number
         board.revealPanel(secondPick);
+        System.out.println("\n");
         printBoard();
 
     }
@@ -213,7 +207,6 @@ public class MemoryGame {
     }
 
 
-
     //MODIFIES: this
     //EFFECTS: asks user if they would like to play again
     private Boolean playAgain(boolean run) {
@@ -244,14 +237,10 @@ public class MemoryGame {
             }
             if (i == 12) {
                 break;
-
             }
             System.out.println("---------------");
-
         }
-
     }
-
 }
 
 
