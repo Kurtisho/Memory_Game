@@ -13,7 +13,7 @@ public class PanelTest {
     @BeforeEach
     void runBefore() {
         testPanel = new Panel("A", "1");
-        matchingPanel = new Panel("B", "1");
+
     }
 
     @Test
@@ -26,6 +26,8 @@ public class PanelTest {
     @Test
     void testGetLetter() {
         assertEquals("A", testPanel.getLetter());
+        testPanel = new Panel("B", "3");
+        assertEquals("B", testPanel.getLetter());
     }
 
     @Test
@@ -39,13 +41,12 @@ public class PanelTest {
         testPanel.setIsFlipped(true);
         assertTrue(testPanel.getIsFlipped());
     }
-
+//
 //    @Test
 //    void testMakeMatchingPanel() {
+//        Panel testPanel2 = new Panel("B", "5");
 //
-//        testPanel.setMatchingPanel(testPanel);
-//
-//        assertEquals(testPanel, matchingPanel);
+//        assertEquals(testPanel, ;
 //    }
 
     @Test

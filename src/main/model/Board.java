@@ -1,21 +1,22 @@
 package model;
 
-import javafx.scene.layout.Pane;
+
 
 import java.util.ArrayList;
 import java.util.Random;
 
-
+// represents a list of Panels
 public class Board {
 
     private ArrayList<Panel> panelList;
 
+    //EFFECTS: creates a new board for the game
     public Board() {
         panelList = new ArrayList<>();
     }
 
     //MODIFIES: this
-    //EFFECTS: prepares the cards according to the level given
+    //EFFECTS: shuffles and adds panels to the game board, then prints
     public void prepareGame() {
         shufflePanels();
         printBoard();
@@ -23,7 +24,7 @@ public class Board {
     }
 
 
-    //MODIFIES:
+
     //EFFECTS: prints out board
     public void printBoard() {
         for (int i = 0; i < panelList.size(); i += 4) {
@@ -50,14 +51,16 @@ public class Board {
 
     }
 
-
+    //MODIFIES: this and panel
+    //EFFECTS: reveals the panel value
     public void revealPanel(Integer pos) {
         Panel panel = panelList.get(pos); // gets element at chosen pos
         panel.setIsFlipped(true);
     }
 
 
-
+    //MODIFIES: this
+    //EFFECTS: shuffles panels and adds to panelList
     public void shufflePanels() {
         ArrayList<Panel> shuffledPanels = new ArrayList<>();
         Random random = new Random();
@@ -77,21 +80,22 @@ public class Board {
         return panelList;
     }
 
-
+    //MODIFIES: this
+    //EFFECTS: checks if pair is matching
     public void isMatching(Integer firstPick, Integer secondPick) {
         Panel firstPanel = panelList.get(firstPick);
         Panel secondPanel = panelList.get(secondPick);
 
         if (!firstPanel.getLetter().equals(secondPanel.getLetter())) {
-            System.out.println("Sorry! this was not a pair!");
+
             firstPanel.setIsFlipped(false);
             secondPanel.setIsFlipped(false);
-        } else {
-            System.out.println("\nYay! you got a pair!");
         }
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: checks if panels are flipped for game to be over
     public boolean isComplete() {
         for (Panel panel : panelList) {
             if (!panel.getIsFlipped()) {

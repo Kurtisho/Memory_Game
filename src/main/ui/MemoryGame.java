@@ -6,7 +6,9 @@ import model.Panel;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// modelled after ca.ubc.cpsc210.bank.ui.TellerApp
 
+// Memory game
 public class MemoryGame {
 
     private Board board;
@@ -16,7 +18,7 @@ public class MemoryGame {
     private Integer firstPick;
     private Integer secondPick;
 
-
+    //MODIFIES: this
     //EFFECTS: runs the memory game
     public MemoryGame() {
         myProgress = new ArrayList<Long>();
@@ -60,7 +62,8 @@ public class MemoryGame {
 
     }
 
-    // user selects characters
+    //MODIFIES: board
+    //EFFECTS: prepares the board for user
     private void prepGame() {
         board = new Board();
         System.out.println("Create your own pairs! Enter a letter: ");
@@ -71,7 +74,7 @@ public class MemoryGame {
             Panel firstPanel = new Panel(input, String.valueOf(board.getPanelList().size()));
             Panel secondPanel = new Panel(input, String.valueOf(board.getPanelList().size()));
 
-            firstPanel.setMatchingPanel(secondPanel);
+            //firstPanel.setMatchingPanel(secondPanel);
 
             board.getPanelList().add(firstPanel);
             board.getPanelList().add(secondPanel);
@@ -81,6 +84,7 @@ public class MemoryGame {
         System.out.println("Board is prepped and ready to play!");
     }
 
+    //EFFECTS: Allows the user to rate the game
     // later implement for each play through
     private void rateGame() {
         System.out.println("Rate this game from 1-5!");
@@ -96,6 +100,7 @@ public class MemoryGame {
         System.out.println("Thank you for rating and playing the game! ");
     }
 
+    //EFFECTS: prints out each attempt of the user's play
     private void showProgress() {
         for (int i = 0; i < myProgress.size(); i++) {
             int run = i + 1;
@@ -104,6 +109,8 @@ public class MemoryGame {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: tracks the play though time of each run done by the user
     private void addTime(long elapsed) {
         elapsed /= 1000;
         myProgress.add(elapsed);
@@ -115,7 +122,8 @@ public class MemoryGame {
         System.out.println("Enter \"p\" to play or \"q\" to quit: ");
     }
 
-    // main method to play
+    //MODIFIES: this
+    //EFFECTS: runs the game
     public void playGame() {
         boolean keepGame = true; // game over?
         board.prepareGame();
@@ -130,12 +138,16 @@ public class MemoryGame {
 
     }
 
+    //MODIFIES: board
+    //EFFECTS: Alters the board each time a pair is found
     private void doTurn() {
         selectNumbers(); // player selects 2 numbers
-        board.isMatching(firstPick, secondPick);
-        board.printBoard();// checks if numbers are matching
+        board.isMatching(firstPick, secondPick); // checks if numbers are matching
+        board.printBoard();
     }
 
+    //MODIFIES: board
+    //EFFECTS: user inserts 2 numbers
     private void selectNumbers() {
         String firstInput;
         String secondInput;
@@ -162,6 +174,8 @@ public class MemoryGame {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: checks if input number is in range
     private Integer checkValidNumber(Integer pick) {
         boolean numberInvalid = true;
 
@@ -178,6 +192,7 @@ public class MemoryGame {
         return pick;
     }
 
+    //MODIFIES: this
     //EFFECTS: checks if panel at position is flipped
     private Integer notAlreadyEntered(Integer pick) {
         Integer placeHolder;
@@ -198,6 +213,8 @@ public class MemoryGame {
 
 
 
+    //MODIFIES: this
+    //EFFECTS: asks user if they would like to play again
     private Boolean playAgain(boolean run) {
         System.out.println("Want to go another round?");
         System.out.println("y -> yes or n -> no");
