@@ -126,7 +126,7 @@ public class MemoryGame {
     //EFFECTS: runs the game
     public void playGame() {
         boolean keepGame = true; // game over?
-        board.prepareGame();
+        board.shufflePanels();
         printBoard();
 
         while (keepGame) {

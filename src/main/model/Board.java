@@ -16,14 +16,6 @@ public class Board {
 
     }
 
-    //MODIFIES: this
-    //EFFECTS: shuffles and adds panels to the game board, then prints
-    public void prepareGame() {
-        shufflePanels();
-    }
-
-
-
 
     //MODIFIES: this and panel
     //EFFECTS: reveals the panel value
