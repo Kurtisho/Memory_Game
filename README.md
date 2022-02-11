@@ -29,7 +29,7 @@ pairs in a full deck.
 
 - As a user, I want to be able to play the game as long as i'd like
 - As a user, I want to be able to see the time spent per game after I quit (time added to list)
-- As a user, I want to see my previous selections (in game)
+- As a user, I want to create my own list of pairs and add them to the game
 - As a user, I want to rate the difficulty of the game (add for each attempt future)
 
 

@@ -1,6 +1,7 @@
 package ui;
 
 import model.Board;
+import model.Panel;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,10 +15,6 @@ public class MemoryGame {
 
     private Integer firstPick;
     private Integer secondPick;
-
-    private String firstLetter;
-    private String secondLetter;
-
 
 
     //EFFECTS: runs the memory game
@@ -69,11 +66,17 @@ public class MemoryGame {
         System.out.println("Create your own pairs! Enter a letter: ");
         for (int i = 1; i < 9; i++) {
             Scanner scan = new Scanner(System.in);
-            String input = scan.nextLine();
-            input = input.toUpperCase();
+            String input = scan.nextLine().toUpperCase();
 
-            board.getLetters().getLetterList().add(input);
-            board.getLetters().getLetterList().add(input);
+            Panel firstPanel = new Panel(input, String.valueOf(board.getPanelList().size()));
+            Panel secondPanel = new Panel(input, String.valueOf(board.getPanelList().size()));
+
+            firstPanel.setMatchingPanel(secondPanel);
+
+            board.getPanelList().add(firstPanel);
+            board.getPanelList().add(secondPanel);
+
+
         }
         System.out.println("Board is prepped and ready to play!");
     }
@@ -119,7 +122,7 @@ public class MemoryGame {
 
         while (keepGame) {
             doTurn(); // player turn
-            if (isGameOver()) {
+            if (board.isComplete()) {
                 System.out.println("Congrats, You finished the game!");
                 keepGame = false;
             }
@@ -129,7 +132,8 @@ public class MemoryGame {
 
     private void doTurn() {
         selectNumbers(); // player selects 2 numbers
-        isMatching(); // checks if numbers are matching
+        board.isMatching(firstPick, secondPick);
+        board.printBoard();// checks if numbers are matching
     }
 
     private void selectNumbers() {
@@ -143,7 +147,8 @@ public class MemoryGame {
         // break point to check if valid entry
         firstInput = scan1.nextLine();
         firstPick = checkValidNumber(Integer.parseInt(firstInput)); // will get a valid number
-        firstLetter = board.revealLetter(firstPick - 1);
+        board.revealPanel(firstPick);
+        board.printBoard();
 
 
         System.out.println("Select another Number: ");
@@ -152,33 +157,17 @@ public class MemoryGame {
 
         secondInput = scan2.nextLine();
         secondPick =  checkValidNumber(Integer.parseInt(secondInput)); // will get a valid number
-        secondLetter = board.revealLetter(secondPick - 1);
+        board.revealPanel(secondPick);
+        board.printBoard();
 
     }
-
-//    private String checkValidInput() {
-//        boolean inputInvalid = true;
-//        Scanner scan = new Scanner(System.in);
-//        String input = scan.nextLine();
-//
-//        while(inputInvalid) {
-//            if (Integer.parseInt(input)) {
-//                input = scan;
-//                inputInvalid = false;
-//            } else {
-//                System.out.println("Please enter an Integer: ");
-//            }
-//        }
-//        return input;
-//    }
-
 
     private Integer checkValidNumber(Integer pick) {
         boolean numberInvalid = true;
 
         while (numberInvalid) {
             if (1 <= pick && pick <= 16) {
-                pick = notAlreadyEntered(pick);
+                pick = notAlreadyEntered(pick - 1);
                 numberInvalid = false;
             } else {
                 System.out.println("Invalid input given, Please enter a Number: ");
@@ -189,40 +178,25 @@ public class MemoryGame {
         return pick;
     }
 
-    //EFFECTS: checks if number given is already removed
+    //EFFECTS: checks if panel at position is flipped
     private Integer notAlreadyEntered(Integer pick) {
+        Integer placeHolder;
         boolean alreadyEntered = true;
         while (alreadyEntered) {
-            if (board.getLetters().getavailableInputList().contains(pick)) {
+            if (!board.getPanelList().get(pick).getIsFlipped()) {
                 alreadyEntered = false;
 
             } else {
                 System.out.println("Already found this pair, enter another number: ");
                 Scanner scan = new Scanner(System.in);
-                pick = scan.nextInt();
+                placeHolder = scan.nextInt();
+                pick = placeHolder - 1;
             }
         }
         return pick;
     }
 
 
-    private void isMatching() {
-        boolean match;
-        match = board.getLetters().isMatchLetter(firstLetter, secondLetter);
-        if (match == true) {
-            board.letterToBoard(firstPick - 1, secondPick - 1, firstLetter, secondLetter);
-            board.getLetters().getavailableInputList().remove(firstPick);
-            board.getLetters().getavailableInputList().remove(secondPick);
-        } else {
-            board.revertBoard(firstPick, secondPick);
-        }
-    }
-
-
-
-    private boolean isGameOver() {
-        return board.getLetters().getavailableInputList().size() == 0;
-    }
 
     private Boolean playAgain(boolean run) {
         System.out.println("Want to go another round?");

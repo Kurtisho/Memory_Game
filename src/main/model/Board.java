@@ -1,27 +1,23 @@
 package model;
 
+import javafx.scene.layout.Pane;
+
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.Random;
 
 
 public class Board {
 
-
-    private  ArrayList<String> boardList = new ArrayList<String>();
-    private Letters letters;
+    private ArrayList<Panel> panelList;
 
     public Board() {
-        letters = new Letters();
+        panelList = new ArrayList<>();
     }
 
     //MODIFIES: this
     //EFFECTS: prepares the cards according to the level given
     public void prepareGame() {
-        for (int i = 1; i <= 16; i++) {
-            boardList.add(String.valueOf(i)); // makes board into strings
-        }
-        letters.shuffleLetters();
-        letters.inputList();
+        shufflePanels();
         printBoard();
 
     }
@@ -30,10 +26,14 @@ public class Board {
     //MODIFIES:
     //EFFECTS: prints out board
     public void printBoard() {
-
-        for (int i = 0; i < boardList.size(); i += 4) {
+        for (int i = 0; i < panelList.size(); i += 4) {
             for (int j = 0; j < 4; j++) {
-                System.out.print(boardList.get(i + j));
+                Panel currentPanel = panelList.get(i + j);
+                if (currentPanel.getIsFlipped()) {
+                    System.out.print(panelList.get(i + j).getLetter());
+                } else {
+                    System.out.print(panelList.get(i + j).getPosition());
+                }
                 if (j == 3) {
                     System.out.print("\n");
                 } else {
@@ -51,55 +51,58 @@ public class Board {
     }
 
 
-//    //EFFECTS: returns value at given index
-//    public String getValue(int index) {
-//        return boardList.get(index - 1);
-//    }
+    public void revealPanel(Integer pos) {
+        Panel panel = panelList.get(pos); // gets element at chosen pos
+        panel.setIsFlipped(true);
+    }
 
 
-    public boolean checkBoard() {
-        boolean isValid = true;
-        while (isValid) {
-            for (String str : boardList) {
-                if (str.equals("X")) {
-                    isValid = true;
-                }
-                isValid = false;
+
+    public void shufflePanels() {
+        ArrayList<Panel> shuffledPanels = new ArrayList<>();
+        Random random = new Random();
+        int index;
+        while (panelList.size() > 0) {
+            index = random.nextInt(panelList.size());
+            Panel currentPanel = panelList.remove(index);
+            currentPanel.setPosition(String.valueOf(shuffledPanels.size() + 1));
+            shuffledPanels.add(currentPanel);
+        }
+        panelList = shuffledPanels;
+    }
+
+
+
+    public ArrayList<Panel> getPanelList() {
+        return panelList;
+    }
+
+
+    public void isMatching(Integer firstPick, Integer secondPick) {
+        Panel firstPanel = panelList.get(firstPick);
+        Panel secondPanel = panelList.get(secondPick);
+
+        if (!firstPanel.getLetter().equals(secondPanel.getLetter())) {
+            System.out.println("Sorry! this was not a pair!");
+            firstPanel.setIsFlipped(false);
+            secondPanel.setIsFlipped(false);
+        } else {
+            System.out.println("\nYay! you got a pair!");
+        }
+
+    }
+
+    public boolean isComplete() {
+        for (Panel panel : panelList) {
+            if (!panel.getIsFlipped()) {
+                return false;
             }
         }
-        if (isValid == true) {
-            return true;
-        }
-        return false;
-
+        return true;
     }
 
-    public ArrayList<String> getBoardList() {
-        return boardList;
-    }
 
-    public String revealLetter(Integer pos) {
-        String replace = letters.getShuffledList().get(pos); // gets element at chosen pos
-        boardList.set(pos, replace); //inserts letter at index
-        printBoard();
-        return replace;
-    }
 
-    public void revertBoard(Integer pos1, Integer pos2) {
-        boardList.set(pos1 - 1,String.valueOf(pos1));
-        boardList.set(pos2 - 1,String.valueOf(pos2));
-        printBoard();
 
-    }
 
-    public void letterToBoard(Integer pos1, Integer pos2, String letter1, String letter2) {
-        boardList.set(pos1, letter1);
-        boardList.set(pos2, letter2);
-        printBoard();
-
-    }
-
-    public Letters getLetters() {
-        return letters;
-    }
 }
