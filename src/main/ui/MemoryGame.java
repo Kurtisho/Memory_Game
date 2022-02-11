@@ -18,6 +18,8 @@ public class MemoryGame {
     private Integer firstPick;
     private Integer secondPick;
 
+    private Integer size;
+
     //MODIFIES: this
     //EFFECTS: runs the memory game
     public MemoryGame() {
@@ -58,21 +60,37 @@ public class MemoryGame {
     //EFFECTS: prepares the board for user
     private void prepGame() {
         board = new Board();
-        System.out.println("Create your own pairs! Enter a letter: ");
-        for (int i = 1; i < 9; i++) {
-            Scanner scan = new Scanner(System.in);
-            String input = scan.nextLine().toUpperCase();
+        validBoardSize();
+        System.out.println("Enter your letters: ");
+        for (int i = 1; i < ((size / 2) + 1); i++) {
+            Scanner scan2 = new Scanner(System.in);
+            String input = scan2.nextLine().toUpperCase();
 
             Panel firstPanel = new Panel(input, String.valueOf(board.getPanelList().size()));
             Panel secondPanel = new Panel(input, String.valueOf(board.getPanelList().size()));
 
-            //firstPanel.setMatchingPanel(secondPanel);
 
             board.getPanelList().add(firstPanel);
             board.getPanelList().add(secondPanel);
 
         }
         System.out.println("Board is prepped and ready to play!");
+    }
+
+    private void validBoardSize() {
+        boolean isInvalid = true;
+        System.out.println("Create your own pairs! Enter a number divisible by 4! ");
+        Scanner scan = new Scanner(System.in);
+        size = scan.nextInt();
+        while (isInvalid) {
+            if ((size % 4 == 0) && (size != 0)) {
+                isInvalid = false;
+            } else {
+                System.out.println("Invalid number! Please enter a number divisible by 4!");
+                Scanner scan2 = new Scanner(System.in);
+                size = scan2.nextInt();
+            }
+        }
     }
 
     //add guard later !!!
@@ -174,7 +192,7 @@ public class MemoryGame {
         boolean numberInvalid = true;
 
         while (numberInvalid) {
-            if (1 <= pick && pick <= 16) {
+            if (1 <= pick && pick <= size) {
                 pick = notAlreadyEntered(pick - 1);
                 numberInvalid = false;
             } else {
@@ -234,7 +252,7 @@ public class MemoryGame {
                     System.out.print(" | ");
                 }
             }
-            if (i == 12) {
+            if (i == (size - 4)) {
                 break;
             }
             System.out.println("---------------");

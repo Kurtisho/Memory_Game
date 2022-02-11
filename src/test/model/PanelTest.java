@@ -44,13 +44,6 @@ public class PanelTest {
         testPanel.setIsFlipped(true);
         assertTrue(testPanel.getIsFlipped());
     }
-//
-//    @Test
-//    void testMakeMatchingPanel() {
-//        Panel testPanel2 = new Panel("B", "5");
-//
-//        assertEquals(testPanel, ;
-//    }
 
     @Test
     void testGetPosition() {
