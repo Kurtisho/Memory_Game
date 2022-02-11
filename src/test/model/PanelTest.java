@@ -9,10 +9,13 @@ public class PanelTest {
 
     private Panel testPanel;
     private Panel matchingPanel;
+    private Board board;
 
     @BeforeEach
     void runBefore() {
+        board = new Board();
         testPanel = new Panel("A", "1");
+
 
     }
 

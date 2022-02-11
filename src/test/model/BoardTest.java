@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BoardTest {
 
@@ -44,6 +45,12 @@ public class BoardTest {
     @Test
     void testIsComplete() {
         Panel panel = new Panel("A", "1");
+        panel.setIsFlipped(true);
+        for (int i = 0; i <= 16; i++) {
+            panelList.add(panel);
+        }
+
+        assertTrue(board.isComplete());
 
     }
 

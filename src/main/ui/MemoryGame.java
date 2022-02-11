@@ -127,6 +127,7 @@ public class MemoryGame {
     public void playGame() {
         boolean keepGame = true; // game over?
         board.prepareGame();
+        printBoard();
 
         while (keepGame) {
             doTurn(); // player turn
@@ -143,7 +144,7 @@ public class MemoryGame {
     private void doTurn() {
         selectNumbers(); // player selects 2 numbers
         board.isMatching(firstPick, secondPick); // checks if numbers are matching
-        board.printBoard();
+        printBoard();
     }
 
     //MODIFIES: board
@@ -160,7 +161,7 @@ public class MemoryGame {
         firstInput = scan1.nextLine();
         firstPick = checkValidNumber(Integer.parseInt(firstInput)); // will get a valid number
         board.revealPanel(firstPick);
-        board.printBoard();
+        printBoard();
 
 
         System.out.println("Select another Number: ");
@@ -170,7 +171,7 @@ public class MemoryGame {
         secondInput = scan2.nextLine();
         secondPick =  checkValidNumber(Integer.parseInt(secondInput)); // will get a valid number
         board.revealPanel(secondPick);
-        board.printBoard();
+        printBoard();
 
     }
 
@@ -223,6 +224,32 @@ public class MemoryGame {
 
         // add user guard later
         return (input.equals("y"));
+    }
+
+    //EFFECTS: prints out board
+    public void printBoard() {
+        for (int i = 0; i < board.getPanelList().size(); i += 4) {
+            for (int j = 0; j < 4; j++) {
+                Panel currentPanel = board.getPanelList().get(i + j);
+                if (currentPanel.getIsFlipped()) {
+                    System.out.print(board.getPanelList().get(i + j).getLetter());
+                } else {
+                    System.out.print(board.getPanelList().get(i + j).getPosition());
+                }
+                if (j == 3) {
+                    System.out.print("\n");
+                } else {
+                    System.out.print(" | ");
+                }
+            }
+            if (i == 12) {
+                break;
+
+            }
+            System.out.println("---------------");
+
+        }
+
     }
 
 }

@@ -1,7 +1,6 @@
 package model;
 
 
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,46 +9,21 @@ public class Board {
 
     private ArrayList<Panel> panelList;
 
+
     //EFFECTS: creates a new board for the game
     public Board() {
         panelList = new ArrayList<>();
+
     }
 
     //MODIFIES: this
     //EFFECTS: shuffles and adds panels to the game board, then prints
     public void prepareGame() {
         shufflePanels();
-        printBoard();
-
     }
 
 
 
-    //EFFECTS: prints out board
-    public void printBoard() {
-        for (int i = 0; i < panelList.size(); i += 4) {
-            for (int j = 0; j < 4; j++) {
-                Panel currentPanel = panelList.get(i + j);
-                if (currentPanel.getIsFlipped()) {
-                    System.out.print(panelList.get(i + j).getLetter());
-                } else {
-                    System.out.print(panelList.get(i + j).getPosition());
-                }
-                if (j == 3) {
-                    System.out.print("\n");
-                } else {
-                    System.out.print(" | ");
-                }
-            }
-            if (i == 12) {
-                break;
-
-            }
-            System.out.println("---------------");
-
-        }
-
-    }
 
     //MODIFIES: this and panel
     //EFFECTS: reveals the panel value
