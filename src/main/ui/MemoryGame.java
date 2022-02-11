@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 // modelled after ca.ubc.cpsc210.bank.ui.TellerApp
 
-// Memory game
+// represents the Memory Game (user interface)
 public class MemoryGame {
 
     private Board board;
@@ -23,7 +23,6 @@ public class MemoryGame {
     public MemoryGame() {
         myProgress = new ArrayList<Long>();
         runGame();
-
     }
 
     //MODIFIES: this
@@ -117,7 +116,7 @@ public class MemoryGame {
     //MODIFIES: this
     //EFFECTS: runs the game
     public void playGame() {
-        boolean keepGame = true; // game over?
+        boolean keepGame = true;
         board.shufflePanels();
         System.out.println("\n");
         printBoard();

@@ -46,7 +46,7 @@ public class Board {
         return panelList;
     }
 
-    //MODIFIES: this
+    //MODIFIES: this and Panel
     //EFFECTS: checks if pair is matching
     public void isMatching(Integer firstPick, Integer secondPick) {
         Panel firstPanel = panelList.get(firstPick);
