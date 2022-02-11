@@ -71,23 +71,53 @@ public class BoardTest {
 
     }
 
-//    @Test
-//    void testIsMatching() {
-//        Panel panel = new Panel("A", "1");
-//        panel.setIsFlipped(true);
-//        testBoard.getPanelList().add(panel);
-//
-//        Panel panel2 = new Panel("B","3");
-//        panel.setIsFlipped(true);
-//        testBoard.getPanelList().add(panel2);
-//
-//        testBoard.isMatching(0, 2);
-//
-//        assertFalse(panel.getIsFlipped());
-//
-//
-//
-//
-//    }
+    @Test
+    void testIsNotMatching() {
+        Panel panel = new Panel("A", "1");
+        panel.setIsFlipped(true);
+        testBoard.getPanelList().add(panel);
+
+        Panel panel2 = new Panel("B","3");
+        panel2.setIsFlipped(true);
+        testBoard.getPanelList().add(panel2);
+
+        testBoard.isMatching(0, 1);
+
+        assertFalse(panel.getIsFlipped());
+        assertFalse(panel2.getIsFlipped());
+
+    }
+
+    @Test
+    void testIsMatching() {
+        Panel panel = new Panel("A", "1");
+        panel.setIsFlipped(true);
+        testBoard.getPanelList().add(panel);
+
+        Panel panel2 = new Panel("A","3");
+        panel2.setIsFlipped(true);
+        testBoard.getPanelList().add(panel2);
+
+        testBoard.isMatching(0, 1);
+
+        assertTrue(panel.getIsFlipped());
+        assertTrue(panel2.getIsFlipped());
+    }
+
+    @Test
+    void testShufflePannels() {
+        for (Panel panel : testPanelList) {
+            testBoard.getPanelList().add(panel);
+        }
+        Board testBoard2 = testBoard;
+        testBoard.shufflePanels();
+        assertEquals(16, testBoard.getPanelList().size());
+
+        //assertNotEquals(testBoard, testBoard2); want to compare the two boards to see if they're different
+
+
+    }
+
+
 
 }
