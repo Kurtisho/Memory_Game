@@ -2,9 +2,15 @@ package ui;
 
 import model.Board;
 import model.Panel;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+
 
 // modelled after ca.ubc.cpsc210.bank.ui.TellerApp from https://github.students.cs.ubc.ca/CPSC210/TellerApp
 // modelled template and menu
@@ -12,6 +18,7 @@ import java.util.Scanner;
 // represents the Memory Game (user interface)
 public class MemoryGame {
 
+    private static final String JSON_STORE = "./data/board.json";
     private Board board;
     private Scanner scanner;
     private ArrayList<Long>  myProgress;
@@ -21,61 +28,64 @@ public class MemoryGame {
 
     private Integer size;
 
+
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
     //MODIFIES: this
     //EFFECTS: runs the memory game
-    public MemoryGame() {
+    public MemoryGame() throws FileNotFoundException {
         myProgress = new ArrayList<Long>();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runGame();
     }
 
     //MODIFIES: this
     //EFFECTS: reads the users inputs
     public void runGame() {
-        boolean keepRunning = true;
-        long start = 0;
-        long finish = 0;
-        long elapsed;
-
-        while (keepRunning) {
-            displayMenu(); // display main menu
+        while (true) {
+            displayMenu();
             scanner = new Scanner(System.in);
-            String input = scanner.nextLine();
-            if (input.equals("q")) {
-                break;
-            } else if (input.equals("p")) {
+            String command = scanner.nextLine();
+            if (command.equals("p")) {
                 prepGame();
-                start = System.currentTimeMillis();
                 playGame();
-                finish = System.currentTimeMillis();
+                break;
+            } else if (command.equals("l")) {
+                loadBoard();
+                printBoard();
+                playGame();
+            } else if (command.equals("q")) {
+                System.out.println("Goodbye! ...");
+                break;
+            } else {
+                System.out.println("Invalid input, please select one of the options");
             }
-            elapsed = finish - start;
-            addTime(elapsed);
-            keepRunning = playAgain(keepRunning);
-        }
-        showProgress();
-        rateGame();
 
+        }
     }
 
     //MODIFIES: board
     //EFFECTS: prepares the board for user
     private void prepGame() {
-        board = new Board();
         validBoardSize();
         System.out.println("Enter your letters: ");
         for (int i = 1; i < ((size / 2) + 1); i++) {
             Scanner scan2 = new Scanner(System.in);
             String input = scan2.nextLine().toUpperCase();
 
-            Panel firstPanel = new Panel(input, String.valueOf(board.getPanelList().size()));
-            Panel secondPanel = new Panel(input, String.valueOf(board.getPanelList().size()));
-
+            Panel firstPanel = new Panel(input, String.valueOf(board.getPanelList().size()), false);
+            Panel secondPanel = new Panel(input, String.valueOf(board.getPanelList().size()), false);
 
             board.getPanelList().add(firstPanel);
             board.getPanelList().add(secondPanel);
 
         }
+        board.shufflePanels();
         System.out.println("Board is prepped and ready to play!");
+        System.out.println("\n");
+        printBoard();
     }
 
     //MODIFIES: this
@@ -91,15 +101,18 @@ public class MemoryGame {
             } else {
                 System.out.println("Invalid number! Please enter a number divisible by 4!");
                 Scanner scan2 = new Scanner(System.in);
-                size = scan2.nextInt();
+                size = scan.nextInt();
             }
         }
+        board = new Board("User's Board", size);
+        board.setBoardSize(size);
+
     }
 
     //add guard later !!!
     //EFFECTS: Allows the user to rate the game
     private void rateGame() {
-        System.out.println("Rate this game from 1-5!");
+        System.out.println("\nRate this game from 1-5!");
         System.out.println("5 - Best game ever!");
         System.out.println("4 - It was really fun");
         System.out.println("3 - It was alright");
@@ -116,7 +129,7 @@ public class MemoryGame {
     private void showProgress() {
         for (int i = 0; i < myProgress.size(); i++) {
             int run = i + 1;
-            System.out.println("Play-through " + run + " : " + myProgress.get(i) + " seconds");
+            System.out.println("\nPlay-through " + run + " : " + myProgress.get(i) + " seconds");
         }
 
     }
@@ -131,25 +144,33 @@ public class MemoryGame {
 
     //EFFECTS: displays the menu of the game
     public void displayMenu() {
-        System.out.println("Enter \"p\" to play or \"q\" to quit: ");
+        System.out.println("\nWelcome to the Memory Game!");
+        System.out.println("Please choose one of the following options");
+        System.out.println("\tp -> play");
+        System.out.println("\tl -> load previous board");
+        System.out.println("\tq -> quit");
     }
 
     //MODIFIES: this
     //EFFECTS: runs the game
     public void playGame() {
+        long start = 0;
+        long finish = 0;
+        long elapsed;
         boolean keepGame = true;
-        board.shufflePanels();
-        System.out.println("\n");
-        printBoard();
 
+        start = System.currentTimeMillis();
         while (keepGame) {
             doTurn(); // player turn
             if (board.isComplete()) {
                 System.out.println("Congrats, You finished the game!");
+                finish = System.currentTimeMillis();
                 keepGame = false;
             }
         }
-
+        elapsed = finish - start;
+        addTime(elapsed);
+        playAgain();
     }
 
     //MODIFIES: board
@@ -159,20 +180,23 @@ public class MemoryGame {
         board.isMatching(firstPick, secondPick); // checks if numbers are matching
         System.out.println("\n");
         printBoard();
+
     }
 
     //MODIFIES: board
     //EFFECTS: user inserts 2 numbers
     private void selectNumbers() {
+        System.out.println("\nIf you would like to save this game and continue later press \"s\" ");
         String firstInput;
         String secondInput;
-        // user selects first number, show board and letter
+        // user selects first number or save,
         System.out.println("Select a Number: ");
         Scanner scan1 = new Scanner(System.in);
 
         // break point to check if valid entry
         firstInput = scan1.nextLine();
-        firstPick = checkValidNumber(Integer.parseInt(firstInput)); // will get a valid number
+        checkSaveOption(firstInput);
+        firstPick = checkValidNumber(Integer.parseInt(firstInput)); // will get a valid number, check if "s"
         board.revealPanel(firstPick);
         System.out.println("\n");
         printBoard();
@@ -182,12 +206,21 @@ public class MemoryGame {
         //break point to check if valid entry
 
         secondInput = scan2.nextLine();
+        checkSaveOption(secondInput);
         secondPick =  checkValidNumber(Integer.parseInt(secondInput)); // will get a valid number
         board.revealPanel(secondPick);
         System.out.println("\n");
         printBoard();
-
     }
+
+    private void checkSaveOption(String input) {
+
+        if (input.equals("s")) {
+            saveGameBoard();
+            System.exit(0);
+        }
+    }
+
 
     //MODIFIES: this
     //EFFECTS: checks if input number is in range
@@ -195,7 +228,7 @@ public class MemoryGame {
         boolean numberInvalid = true;
 
         while (numberInvalid) {
-            if (1 <= pick && pick <= size) {
+            if (1 <= pick && pick <= board.getBoardSize()) {
                 pick = notAlreadyEntered(pick - 1);
                 numberInvalid = false;
             } else {
@@ -229,14 +262,25 @@ public class MemoryGame {
 
     //MODIFIES: this
     //EFFECTS: asks user if they would like to play again
-    private Boolean playAgain(boolean run) {
-        System.out.println("Want to go another round?");
-        System.out.println("y -> yes or n -> no");
-        Scanner scan = new Scanner(System.in);
-        String input = scan.nextLine();
+    private void playAgain() {
+        while (true) {
+            System.out.println("\nWant to go another round?");
+            System.out.println("y -> yes or n -> no");
+            scanner = new Scanner(System.in);
+            String command = scanner.nextLine();
 
-        // add user guard later
-        return (input.equals("y"));
+            if (command.equals("y")) {
+                prepGame();
+                playGame();
+                break;
+            } else if (command.equals("n")) {
+                showProgress();
+                rateGame();
+                break;
+            } else {
+                System.out.println("Invalid input, please select one of the options");
+            }
+        }
     }
 
     //EFFECTS: prints out board
@@ -255,10 +299,34 @@ public class MemoryGame {
                     System.out.print(" | ");
                 }
             }
-            if (i == (size - 4)) {
+            if (i == (board.getBoardSize() - 4)) {
                 break;
             }
             System.out.println("---------------");
+        }
+
+    }
+
+    // EFFECTS: saves the Board to file
+    private void saveGameBoard() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(board);
+            jsonWriter.close();
+            System.out.println("Saved Board to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads board from file
+    private void loadBoard() {
+        try {
+            board = jsonReader.read();
+            System.out.println("Loaded previous board from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 }

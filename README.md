@@ -34,4 +34,7 @@ who can achieve the fastest time.
 - As a user, I want to rate the difficulty of the game
 - As a user, I want to clearly see my previous attempts (keep only for console?)
 
+- As a user, I want to save my time for board size
+- As a user, I want to save my current board? (if feasible)
+
 

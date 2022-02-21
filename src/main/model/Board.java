@@ -1,18 +1,27 @@
 package model;
 
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 // represents a list of Panels
-public class Board {
+public class Board implements Writable {
 
     private ArrayList<Panel> panelList;
+    private String name;
+    private Integer boardSize;
 
 
     //EFFECTS: creates a new board for the game
-    public Board() {
+    public Board(String name, Integer boardSize) {
+
         panelList = new ArrayList<>();
+        this.name = name;
+        this.boardSize = boardSize;
 
     }
 
@@ -46,6 +55,10 @@ public class Board {
         return panelList;
     }
 
+    public String getName() {
+        return name;
+    }
+
     //MODIFIES: this and Panel
     //EFFECTS: checks if pair is matching
     public void isMatching(Integer firstPick, Integer secondPick) {
@@ -69,5 +82,36 @@ public class Board {
         }
         return true;
     }
+
+    //getter
+    public Integer getBoardSize() {
+        return boardSize;
+    }
+
+    //setter
+    public void setBoardSize(Integer size) {
+        boardSize = size;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("panels", panelstoJson());
+        json.put("boardsize", boardSize);
+        return json;
+    }
+
+    // EFFECTS: returns things in this Board as a JSON array
+    private JSONArray panelstoJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Panel p : panelList) {
+            jsonArray.put(p.toJson());
+        }
+
+        return jsonArray;
+    }
+
 
 }

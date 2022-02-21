@@ -9,13 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PanelTest {
 
     private Panel testPanel;
-    private Panel matchingPanel;
-    private Board board;
+    
 
     @BeforeEach
     void runBefore() {
-        board = new Board();
-        testPanel = new Panel("A", "1");
+        Board board = new Board("Test Board", 16);
+        testPanel = new Panel("A", "1",false);
 
 
     }
@@ -30,9 +29,11 @@ public class PanelTest {
     @Test
     void testGetLetter() {
         assertEquals("A", testPanel.getLetter());
-        testPanel = new Panel("B", "3");
+        testPanel = new Panel("B", "3",false);
         assertEquals("B", testPanel.getLetter());
     }
+
+
 
     @Test
     void testIsFlipped() {
@@ -49,7 +50,7 @@ public class PanelTest {
     @Test
     void testGetPosition() {
         assertEquals("1", testPanel.getPosition());
-        Panel testPanel2 = new Panel("B", "3");
+        Panel testPanel2 = new Panel("B", "3",false);
         assertEquals("3", testPanel2.getPosition());
     }
 
