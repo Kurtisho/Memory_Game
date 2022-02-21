@@ -122,6 +122,12 @@ public class BoardTest {
 
     }
 
+    @Test
+    void testSetBoardSize() {
+        testBoard.setBoardSize(16);
+        assertEquals(16, testBoard.getBoardSize());
+    }
+
 
 
 }

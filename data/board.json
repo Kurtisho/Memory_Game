@@ -1,17 +1,17 @@
 {
     "panels": [
         {
-            "Panel Letter": "B",
+            "Panel Letter": "A",
             "Position": "1",
             "Flipped Value": true
         },
         {
-            "Panel Letter": "C",
+            "Panel Letter": "A",
             "Position": "2",
             "Flipped Value": true
         },
         {
-            "Panel Letter": "B",
+            "Panel Letter": "C",
             "Position": "3",
             "Flipped Value": true
         },
@@ -21,12 +21,12 @@
             "Flipped Value": false
         },
         {
-            "Panel Letter": "A",
+            "Panel Letter": "B",
             "Position": "5",
             "Flipped Value": false
         },
         {
-            "Panel Letter": "A",
+            "Panel Letter": "B",
             "Position": "6",
             "Flipped Value": false
         },

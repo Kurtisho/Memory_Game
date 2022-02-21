@@ -1,5 +1,7 @@
 package persistence;
 
+// modelled after persistence.JsonReader from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -15,7 +17,7 @@ import model.Board;
 import model.Panel;
 
 
-// Represents a reader that reads workroom from JSON data stored in file
+// Represents a reader that reads Board from JSON data stored in file
 public class JsonReader {
     private String source;
 
@@ -24,7 +26,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads Board from file and returns it;
     // throws IOException if an error occurs reading data from file
     public Board read() throws IOException {
         String jsonData = readFile(source);

@@ -123,6 +123,8 @@ public class MemoryGame {
         String input = scan.nextLine();
 
         System.out.println("Thank you for rating and playing the game! ");
+        System.exit(0);
+
     }
 
     //EFFECTS: prints out each attempt of the user's play
@@ -213,6 +215,7 @@ public class MemoryGame {
         printBoard();
     }
 
+    //EFFECTS: checks if save option was selected
     private void checkSaveOption(String input) {
 
         if (input.equals("s")) {

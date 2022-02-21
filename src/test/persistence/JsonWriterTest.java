@@ -11,7 +11,7 @@ import model.Board;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-
+//class represents JsonWriter tests
 public class JsonWriterTest extends JsonTest {
 
     @Test
