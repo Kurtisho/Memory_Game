@@ -32,13 +32,14 @@ public class MemoryGame {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    //MODIFIES: this
+
     //EFFECTS: runs the memory game
     public MemoryGame() throws FileNotFoundException {
         myProgress = new ArrayList<Long>();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         runGame();
+
     }
 
     //MODIFIES: this

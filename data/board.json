@@ -3,27 +3,27 @@
         {
             "Panel Letter": "A",
             "Position": "1",
-            "Flipped Value": true
-        },
-        {
-            "Panel Letter": "A",
-            "Position": "2",
-            "Flipped Value": true
-        },
-        {
-            "Panel Letter": "C",
-            "Position": "3",
-            "Flipped Value": true
-        },
-        {
-            "Panel Letter": "D",
-            "Position": "4",
             "Flipped Value": false
         },
         {
             "Panel Letter": "B",
-            "Position": "5",
+            "Position": "2",
             "Flipped Value": false
+        },
+        {
+            "Panel Letter": "C",
+            "Position": "3",
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "D",
+            "Position": "4",
+            "Flipped Value": true
+        },
+        {
+            "Panel Letter": "D",
+            "Position": "5",
+            "Flipped Value": true
         },
         {
             "Panel Letter": "B",
@@ -33,10 +33,10 @@
         {
             "Panel Letter": "C",
             "Position": "7",
-            "Flipped Value": true
+            "Flipped Value": false
         },
         {
-            "Panel Letter": "D",
+            "Panel Letter": "A",
             "Position": "8",
             "Flipped Value": false
         }
