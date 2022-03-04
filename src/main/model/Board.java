@@ -93,6 +93,8 @@ public class Board implements Writable {
         boardSize = size;
     }
 
+
+    //EFFECTS: stores parameters of board to JSON array
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

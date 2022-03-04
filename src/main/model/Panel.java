@@ -39,7 +39,7 @@ public class Panel implements Writable {
         this.position = position;
     }
 
-
+    //EFFECTS: stores panel parameters into JSON array
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

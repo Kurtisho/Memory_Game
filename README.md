@@ -35,6 +35,6 @@ who can achieve the fastest time.
 - As a user, I want to clearly see my previous attempts (keep only for console?)
 
 - As a user, I want to be able to save the current board I'm working on
-- As a user, when I start the application, I want to be able to load my board from last time I played.
+- As a user, when I start the application, I want to be able to load my board from the last time I played.
 
 
