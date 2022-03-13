@@ -42,5 +42,6 @@
     }
   ],
   "boardsize": 8,
-  "name": "User's Board"
+  "name": "User's Board",
+  "time": 7000
 }

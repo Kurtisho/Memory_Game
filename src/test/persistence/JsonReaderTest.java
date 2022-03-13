@@ -31,6 +31,7 @@ public class JsonReaderTest extends JsonTest{
             Board board = reader.read();
             assertEquals("Empty Board", board.getName());
             assertEquals(0, board.getBoardSize());
+            assertEquals(0,board.getSavedTime());
         } catch (IOException e) {
             fail("Empty Reading file does not exist");
         }
@@ -44,6 +45,7 @@ public class JsonReaderTest extends JsonTest{
             Board board = reader.read();
             assertEquals("User's Board", board.getName());
             assertEquals(8, board.getBoardSize());
+            assertEquals(7000, board.getSavedTime());
             checkPanel("B", "1", true, board.getPanelList().get(0));
             checkPanel("A", "6", false, board.getPanelList().get(5));
         } catch(IOException e){

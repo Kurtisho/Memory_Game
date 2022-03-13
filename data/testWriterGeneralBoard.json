@@ -22,5 +22,6 @@
         }
     ],
     "boardsize": 4,
-    "name": "Test Board"
+    "name": "Test Board",
+    "time": 0
 }
