@@ -23,7 +23,7 @@ public class BoardTest {
              new Panel("H","16",false)));
 
         // size of board is based on user input, for this purpose it is 16
-        testBoard = new Board("Test Board", 16);
+        testBoard = new Board("Test Board", 16, 0);
 
     }
 
@@ -127,6 +127,27 @@ public class BoardTest {
         testBoard.setBoardSize(16);
         assertEquals(16, testBoard.getBoardSize());
     }
+
+    @Test
+    void testStartTime() {
+        assertEquals(testBoard.startTime(), System.currentTimeMillis());
+    }
+
+    @Test
+    void testEndTime() {
+        assertEquals(testBoard.endTime(), System.currentTimeMillis());
+    }
+
+    @Test
+    void testGetElapsed() {
+        assertEquals(0,testBoard.getElapsed() );
+    }
+
+    @Test
+    void testGetSavedTime() {
+        assertEquals(0, testBoard.getSavedTime());
+    }
+
 
 
 

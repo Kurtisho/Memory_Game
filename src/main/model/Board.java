@@ -3,6 +3,7 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import persistence.JsonReader;
 import persistence.Writable;
 
 import java.util.ArrayList;
@@ -16,12 +17,20 @@ public class Board implements Writable {
     private Integer boardSize;
 
 
+    private long start;
+    private long end;
+    private long elapsed;
+
+    private long savedTime;
+
+
     //EFFECTS: creates a new board for the game
-    public Board(String name, Integer boardSize) {
+    public Board(String name, Integer boardSize, long savedTime) {
 
         panelList = new ArrayList<>();
         this.name = name;
         this.boardSize = boardSize;
+        this.savedTime = savedTime;
 
     }
 
@@ -94,6 +103,31 @@ public class Board implements Writable {
     }
 
 
+    //MODIFIES: this
+    //EFFECTS: starts clock
+    public long startTime() {
+        start = System.currentTimeMillis();
+        return start;
+    }
+
+    //MODIFIES: this
+    //EFFECTS: ends clock, calculates time elapsed
+    public long endTime() {
+        end = System.currentTimeMillis();
+        elapsed = end - start;
+        return end;
+    }
+
+    //getter-
+    public long getElapsed() {
+        return elapsed;
+    }
+
+    //getter
+    public long getSavedTime() {
+        return savedTime;
+    }
+
     //EFFECTS: stores parameters of board to JSON array
     @Override
     public JSONObject toJson() {
@@ -101,6 +135,7 @@ public class Board implements Writable {
         json.put("name", name);
         json.put("panels", panelstoJson());
         json.put("boardsize", boardSize);
+        json.put("time",elapsed + savedTime);
         return json;
     }
 

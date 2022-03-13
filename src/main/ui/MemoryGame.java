@@ -28,6 +28,8 @@ public class MemoryGame {
 
     private Integer size;
 
+    // time from old board
+    private long savedTime;
 
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -105,7 +107,7 @@ public class MemoryGame {
                 size = scan.nextInt();
             }
         }
-        board = new Board("User's Board", size);
+        board = new Board("User's Board", size, 0);
         board.setBoardSize(size);
 
     }
@@ -139,9 +141,10 @@ public class MemoryGame {
 
     //MODIFIES: this
     //EFFECTS: tracks the play though time of each run done by the user
-    private void addTime(long elapsed) {
-        elapsed /= 1000;
-        myProgress.add(elapsed);
+    private void addTime(long currentTime, long savedTime) {
+        savedTime /= 1000;
+        currentTime /= 1000;
+        myProgress.add(savedTime + currentTime);
     }
 
 
@@ -157,24 +160,22 @@ public class MemoryGame {
     //MODIFIES: this
     //EFFECTS: runs the game
     public void playGame() {
-        long start = 0;
-        long finish = 0;
-        long elapsed;
-        boolean keepGame = true;
+        board.startTime();
 
-        start = System.currentTimeMillis();
+        boolean keepGame = true;
         while (keepGame) {
             doTurn(); // player turn
             if (board.isComplete()) {
                 System.out.println("Congrats, You finished the game!");
-                finish = System.currentTimeMillis();
+                board.endTime();
                 keepGame = false;
             }
         }
-        elapsed = finish - start;
-        addTime(elapsed);
+        addTime(board.getElapsed(), board.getSavedTime());
         playAgain();
     }
+
+
 
     //MODIFIES: board
     //EFFECTS: Alters the board each time a pair is found
@@ -220,6 +221,7 @@ public class MemoryGame {
     private void checkSaveOption(String input) {
 
         if (input.equals("s")) {
+            board.endTime();
             saveGameBoard();
             System.exit(0);
         }

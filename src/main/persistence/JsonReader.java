@@ -49,7 +49,8 @@ public class JsonReader {
     private Board parseBoard(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         Integer boardSize = jsonObject.getInt("boardsize");
-        Board board = new Board(name, boardSize);
+        Long time = jsonObject.getLong("time");
+        Board board = new Board(name, boardSize, time);
         addPanels(board, jsonObject);
         return board;
     }
