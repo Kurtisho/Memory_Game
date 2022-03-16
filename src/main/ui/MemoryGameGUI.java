@@ -28,7 +28,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     private static final Dimension MAIN_MENU_BUT_DIM = new Dimension(500, 250);
 
 //    private static final LayoutManager playingBoard = new GridLayout(4,4,10,10); // change later
-
+// cmt for push
     private Board board;
 
     private CardLayout cl;
@@ -155,7 +155,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         gamePanel.setBackground(BACKGROUND_COLOUR);
         gamePanel.setLayout(null);
 
-        
+
 
         mainPanel.add(gamePanel, "game");
     }
