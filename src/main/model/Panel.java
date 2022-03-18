@@ -8,10 +8,10 @@ public class Panel implements Writable {
 
     private String letter;
     private boolean isFlipped;
-    private String position;
+    private Integer position;
 
     //EFFECTS: creates a panel with a letter, position and flip value
-    public Panel(String letter, String position, Boolean flipValue) {
+    public Panel(String letter, Integer position, Boolean flipValue) {
         this.letter = letter;
         isFlipped = flipValue;
         this.position = position;
@@ -26,7 +26,7 @@ public class Panel implements Writable {
         return isFlipped;
     }
 
-    public String getPosition() {
+    public Integer getPosition() {
         return position;
     }
 
@@ -35,7 +35,7 @@ public class Panel implements Writable {
         this.isFlipped = isFlipped;
     }
 
-    public void setPosition(String position) {
+    public void setPosition(Integer position) {
         this.position = position;
     }
 

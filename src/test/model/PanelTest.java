@@ -14,7 +14,7 @@ public class PanelTest {
     @BeforeEach
     void runBefore() {
         Board board = new Board("Test Board", 16, 0);
-        testPanel = new Panel("A", "1",false);
+        testPanel = new Panel("A", 1,false);
 
 
     }
@@ -23,13 +23,13 @@ public class PanelTest {
     void testConstructor() {
         assertEquals("A", testPanel.getLetter());
         assertFalse(testPanel.getIsFlipped());
-        assertEquals("1", testPanel.getPosition());
+        assertEquals(1, testPanel.getPosition());
     }
 
     @Test
     void testGetLetter() {
         assertEquals("A", testPanel.getLetter());
-        testPanel = new Panel("B", "3",false);
+        testPanel = new Panel("B", 3,false);
         assertEquals("B", testPanel.getLetter());
     }
 
@@ -49,16 +49,16 @@ public class PanelTest {
 
     @Test
     void testGetPosition() {
-        assertEquals("1", testPanel.getPosition());
-        Panel testPanel2 = new Panel("B", "3",false);
-        assertEquals("3", testPanel2.getPosition());
+        assertEquals(1, testPanel.getPosition());
+        Panel testPanel2 = new Panel("B", 3,false);
+        assertEquals(3, testPanel2.getPosition());
     }
 
     @Test
     void testSetPosition() {
-        testPanel.setPosition("B");
+        testPanel.setPosition(5);
 
-        assertEquals("B", testPanel.getPosition());
+        assertEquals(5, testPanel.getPosition());
     }
 
 }

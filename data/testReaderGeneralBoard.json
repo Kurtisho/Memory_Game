@@ -2,42 +2,42 @@
   "panels": [
     {
       "Panel Letter": "B",
-      "Position": "1",
+      "Position": 1,
       "Flipped Value": true
     },
     {
       "Panel Letter": "C",
-      "Position": "2",
+      "Position": 2,
       "Flipped Value": true
     },
     {
       "Panel Letter": "B",
-      "Position": "3",
+      "Position": 3,
       "Flipped Value": true
     },
     {
       "Panel Letter": "D",
-      "Position": "4",
+      "Position": 4,
       "Flipped Value": false
     },
     {
       "Panel Letter": "A",
-      "Position": "5",
+      "Position": 5,
       "Flipped Value": false
     },
     {
       "Panel Letter": "A",
-      "Position": "6",
+      "Position": 6,
       "Flipped Value": false
     },
     {
       "Panel Letter": "C",
-      "Position": "7",
+      "Position": 7,
       "Flipped Value": true
     },
     {
       "Panel Letter": "D",
-      "Position": "8",
+      "Position": 8,
       "Flipped Value": false
     }
   ],

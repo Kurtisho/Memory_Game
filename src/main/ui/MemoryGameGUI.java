@@ -1,17 +1,16 @@
 package ui;
 
 import model.Board;
+import model.Panel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 public class MemoryGameGUI extends JFrame implements ActionListener {
-
-    private static final int PLAYING_WIDTH = 1200;
-    private static final int PLAYING_HEIGHT = 900;
 
     private static final int HUD_WIDTH = 800;
     private static final int HUD_HEIGHT = 800;
@@ -27,9 +26,10 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     private static final Font MENU_BUTTON_FONT = new Font("Spectre", Font.PLAIN, 50);
     private static final Dimension MAIN_MENU_BUT_DIM = new Dimension(500, 250);
 
+    private int rows;
+
 //    private static final LayoutManager playingBoard = new GridLayout(4,4,10,10); // change later
-// cmt for push
-    private Board board;
+
 
     private CardLayout cl;
 
@@ -39,11 +39,13 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     private JPanel menuLayout;
 
     private JPanel gamePanel; // second action panel
-    private JPanel gameBoard;
 
-    private JPanel smt;
 
     private JFrame frame;
+
+    private Board board;
+    private ArrayList<CardPanel> cardPanels;
+
 
 
 
@@ -150,17 +152,96 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         menuLayout.add(quitBut);
     }
 
-    private void setGameUp() {
+    private void setGamePanel() {
         gamePanel = new JPanel();
         gamePanel.setBackground(BACKGROUND_COLOUR);
-        gamePanel.setLayout(null);
+//        gamePanel.setLayout(null);
 
-
+        initializeBoard();
 
         mainPanel.add(gamePanel, "game");
+
     }
 
+    //EFFECTS: initializes the pairs and board
+    private void initializeBoard() {
+        howManyRows(); // gets users desired board
 
+        board = new Board("User's Board", (rows * 4), 0);
+        designPanel(); // user designs letters in panel
+        board.shufflePanels();
+
+        setUpPanelBoard();
+
+//        doSmt();
+
+
+    }
+
+    //EFFECTS: user specifies how many rows
+    private void howManyRows() {
+        boolean keepGoing = true;
+        while (keepGoing) {
+            try {
+                String input = JOptionPane.showInputDialog("Enter the number of rows you'd like (MAX: 4)");
+                rows = Integer.parseInt(input);
+                if (rows > 4 || rows <= 0) {
+                    throw new NumberFormatException();
+                }
+                keepGoing = false;
+            } catch (NumberFormatException e) {
+                invalidNumberPopUp("Please enter a valid number!"); // invalid number given or > 4
+            }
+        }
+
+    }
+
+    private void invalidNumberPopUp(String message) {
+        JOptionPane.showConfirmDialog(this, message, "Invalid Number!!!", JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE);
+
+    }
+
+    //EFFECTS: users determine the string on panels
+    private void designPanel() {
+
+        for (int i = 1; i < (board.getBoardSize() / 2) + 1; i++) {
+            String input = JOptionPane.showInputDialog("Enter a letter you'd like!");
+
+            Panel firstPanel = new Panel(input, board.getPanelList().size(), false);
+            Panel secondPanel  = new Panel(input, board.getPanelList().size(), false);
+
+            board.getPanelList().add(firstPanel);
+            board.getPanelList().add(secondPanel);
+        }
+
+    }
+
+    // creates the individual panels (determined by user's row)
+    private void setUpPanelBoard() {
+        cardPanels = new ArrayList<>();
+
+        // Create the rows of panels and add cards to each panel
+        for (int i = 0; i < rows; i++) {
+
+            CardPanel cardPanel = new CardPanel(this);
+            cardPanels.add(cardPanel);
+            gamePanel.add(cardPanels.get(i));
+
+        }
+
+
+    }
+
+//    private void doSmt() {
+//        JLabel smt = new JLabel("Hello");
+//
+//        smt.setBounds(50,200,200,50);
+//        smt.setFont(new Font("Spectre", Font.PLAIN,50));
+//        smt.setForeground(TITLE_COLOUR);
+//
+//        gamePanel.add(smt);
+//    }
 
 
 
@@ -171,7 +252,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Create Board" :
-                setGameUp();
+                setGamePanel();
                 cl.show(mainPanel, "game");
                 break;
             case "Load Board":
@@ -180,5 +261,11 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
             case "Quit Game":
                 System.out.println("Quitting Game");
         }
+    }
+
+
+    // EFFECTS: returns the Board associated with this game
+    public Board getGameboard() {
+        return board;
     }
 }

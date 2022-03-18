@@ -2,22 +2,22 @@
     "panels": [
         {
             "Panel Letter": "A",
-            "Position": "1",
+            "Position": 1,
             "Flipped Value": false
         },
         {
             "Panel Letter": "B",
-            "Position": "2",
+            "Position": 2,
             "Flipped Value": false
         },
         {
             "Panel Letter": "B",
-            "Position": "3",
+            "Position": 3,
             "Flipped Value": false
         },
         {
             "Panel Letter": "A",
-            "Position": "4",
+            "Position": 4,
             "Flipped Value": false
         }
     ],

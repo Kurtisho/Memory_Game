@@ -48,10 +48,10 @@ public class JsonWriterTest extends JsonTest {
     void testWriterGeneralBoard() {
         try {
             Board b = new Board("Test Board", 4, 0);
-            b.getPanelList().add(new Panel("A", "1", false));
-            b.getPanelList().add(new Panel("B", "2", false));
-            b.getPanelList().add(new Panel("B", "3", false));
-            b.getPanelList().add(new Panel("A", "4", false));
+            b.getPanelList().add(new Panel("A", 1, false));
+            b.getPanelList().add(new Panel("B", 2, false));
+            b.getPanelList().add(new Panel("B", 3, false));
+            b.getPanelList().add(new Panel("A", 4, false));
 
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralBoard.json");
             writer.open();
@@ -63,8 +63,8 @@ public class JsonWriterTest extends JsonTest {
             assertEquals("Test Board", b.getName());
             assertEquals(4, b.getBoardSize());
             assertEquals(0,b.getSavedTime());
-            checkPanel("A", "1", false, b.getPanelList().get(0));
-            checkPanel("B", "3", false, b.getPanelList().get(2));
+            checkPanel("A", 1, false, b.getPanelList().get(0));
+            checkPanel("B", 3, false, b.getPanelList().get(2));
         } catch (IOException e) {
             fail("Was not supposed to catch this");
         }

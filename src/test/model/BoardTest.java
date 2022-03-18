@@ -17,10 +17,10 @@ public class BoardTest {
 
     @BeforeEach
     void runbefore() {
-        testPanelList = new ArrayList<Panel>(Arrays.asList(new Panel("A","1", false),new Panel("A","2",false),
-                new Panel("B","3",false),new Panel("B","4",false),new Panel("C","5",false),new Panel("C","6",false),new Panel("D","7",false),
-             new Panel("D","8",false),new Panel("E","9",false),new Panel("E","10",false),new Panel("F","11",false),new Panel("F","12",false),new Panel("G","13",false),new Panel("G","14",false),new Panel("H","15",false),
-             new Panel("H","16",false)));
+        testPanelList = new ArrayList<Panel>(Arrays.asList(new Panel("A",0, false),new Panel("A",1,false),
+                new Panel("B",2,false),new Panel("B",3,false),new Panel("C",4,false),new Panel("C",5,false),new Panel("D",6,false),
+             new Panel("D",7,false),new Panel("E",8,false),new Panel("E",9,false),new Panel("F",10,false),new Panel("F",11,false),new Panel("G",12,false),new Panel("G",13,false),new Panel("H",14,false),
+             new Panel("H",15,false)));
 
         // size of board is based on user input, for this purpose it is 16
         testBoard = new Board("Test Board", 16, 0);
@@ -36,14 +36,14 @@ public class BoardTest {
     @Test
     void testGetPanelList() {
         assertEquals(0, testBoard.getPanelList().size());
-        testBoard.getPanelList().add(new Panel("A","1",false));
+        testBoard.getPanelList().add(new Panel("A",1,false));
         assertEquals(1, testBoard.getPanelList().size());
 
     }
 
     @Test
     void testIsComplete() {
-        Panel panel = new Panel("A", "1",false);
+        Panel panel = new Panel("A", 1,false);
         panel.setIsFlipped(true);
         for (int i = 0; i <= 16; i++) {
             testBoard.getPanelList().add(panel);
@@ -54,19 +54,19 @@ public class BoardTest {
 
     @Test
     void testInNotComplete() {
-        Panel panel = new Panel("A", "1",false);
+        Panel panel = new Panel("A", 1,false);
         panel.setIsFlipped(true);
         for (int i = 0; i <= 15; i++) {
             testBoard.getPanelList().add(panel);
         }
-        Panel panel2 = new Panel("B", "2",false);
+        Panel panel2 = new Panel("B", 2,false);
         testBoard.getPanelList().add(panel2);
 
         assertFalse(testBoard.isComplete());
     }
     @Test
     void testRevealPanel() {
-        testBoard.getPanelList().add(new Panel("A","1",false));
+        testBoard.getPanelList().add(new Panel("A",1,false));
         testBoard.revealPanel(0);
         assertTrue(testBoard.getPanelList().get(0).getIsFlipped());
 
@@ -75,11 +75,11 @@ public class BoardTest {
 
     @Test
     void testIsNotMatching() {
-        Panel panel = new Panel("A", "1",false);
+        Panel panel = new Panel("A", 1,false);
         panel.setIsFlipped(true);
         testBoard.getPanelList().add(panel);
 
-        Panel panel2 = new Panel("B","3",false);
+        Panel panel2 = new Panel("B",3,false);
         panel2.setIsFlipped(true);
         testBoard.getPanelList().add(panel2);
 
@@ -92,11 +92,11 @@ public class BoardTest {
 
     @Test
     void testIsMatching() {
-        Panel panel = new Panel("A", "1",false);
+        Panel panel = new Panel("A", 1,false);
         panel.setIsFlipped(true);
         testBoard.getPanelList().add(panel);
 
-        Panel panel2 = new Panel("A","3",false);
+        Panel panel2 = new Panel("A",3,false);
         panel2.setIsFlipped(true);
         testBoard.getPanelList().add(panel2);
 

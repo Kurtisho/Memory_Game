@@ -69,7 +69,7 @@ public class JsonReader {
     // EFFECTS: parses Panel from JSON object and adds it to Board
     private void addPanel(Board board, JSONObject jsonObject) {
         String panelLetter = jsonObject.getString("Panel Letter");
-        String position = jsonObject.getString("Position");
+        Integer position = jsonObject.getInt("Position");
         Boolean flippedValue = jsonObject.getBoolean("Flipped Value");
         Panel p = new Panel(panelLetter, position, flippedValue);
         board.getPanelList().add(p);

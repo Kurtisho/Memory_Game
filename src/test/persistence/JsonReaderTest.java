@@ -46,8 +46,8 @@ public class JsonReaderTest extends JsonTest{
             assertEquals("User's Board", board.getName());
             assertEquals(8, board.getBoardSize());
             assertEquals(7000, board.getSavedTime());
-            checkPanel("B", "1", true, board.getPanelList().get(0));
-            checkPanel("A", "6", false, board.getPanelList().get(5));
+            checkPanel("B", 1, true, board.getPanelList().get(0));
+            checkPanel("A", 6, false, board.getPanelList().get(5));
         } catch(IOException e){
             fail("General Reading file does not exist");
         }

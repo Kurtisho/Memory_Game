@@ -78,8 +78,8 @@ public class MemoryGame {
             Scanner scan2 = new Scanner(System.in);
             String input = scan2.nextLine().toUpperCase();
 
-            Panel firstPanel = new Panel(input, String.valueOf(board.getPanelList().size()), false);
-            Panel secondPanel = new Panel(input, String.valueOf(board.getPanelList().size()), false);
+            Panel firstPanel = new Panel(input, board.getPanelList().size(), false);
+            Panel secondPanel = new Panel(input, board.getPanelList().size(), false);
 
             board.getPanelList().add(firstPanel);
             board.getPanelList().add(secondPanel);

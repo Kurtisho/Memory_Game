@@ -3,7 +3,7 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import persistence.JsonReader;
+//import persistence.JsonReader;
 import persistence.Writable;
 
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class Board implements Writable {
         while (panelList.size() > 0) {
             index = random.nextInt(panelList.size());
             Panel currentPanel = panelList.remove(index);
-            currentPanel.setPosition(String.valueOf(shuffledPanels.size() + 1));
+            currentPanel.setPosition((shuffledPanels.size() + 1));
             shuffledPanels.add(currentPanel);
         }
         panelList = shuffledPanels;
