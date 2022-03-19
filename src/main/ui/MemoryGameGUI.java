@@ -3,10 +3,14 @@ package ui;
 import model.Board;
 import model.Panel;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -28,6 +32,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
 
     private int rows;
 
+
 //    private static final LayoutManager playingBoard = new GridLayout(4,4,10,10); // change later
 
 
@@ -36,9 +41,13 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     private JPanel mainPanel; // panel everything is worked on
 
     private JPanel mainMenuPanel; //first action panel
-    private JPanel menuLayout;
+    private JPanel menuLayout; // panel where menu buttons are added to
 
     private JPanel gamePanel; // second action panel
+    private JPanel gameBoardPanel;  // panel where panel(card) buttons are added to
+
+    private JPanel endGamePanel; // third action panel -> show winning image
+
 
 
     private JFrame frame;
@@ -59,6 +68,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         frame.setVisible(true);
 
         mainMenuHUD();
+
 
 
         // add json later
@@ -82,7 +92,10 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         initTitle();
         initMenuOptions();
 
+
         mainPanel.add(mainMenuPanel, "menu");
+        System.out.println("Running!");
+
     }
 
     private void initTitle() {
@@ -110,7 +123,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     }
 
     private void newBoardButton() {
-        JButton gameBut = new JButton("Create New Board");
+        JButton gameBut = new JButton("Create Board");
         gameBut.setBackground(MAIN_MENU_BUT_COLOUR);
         gameBut.setForeground(TITLE_COLOUR);
         gameBut.setFont(MENU_BUTTON_FONT);
@@ -125,7 +138,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     }
 
     private void loadBoardButton() {
-        JButton loadBut = new JButton("Load Previous Board");
+        JButton loadBut = new JButton("Load Board");
         loadBut.setBackground(MAIN_MENU_BUT_COLOUR);
         loadBut.setForeground(TITLE_COLOUR);
         loadBut.setFont(MENU_BUTTON_FONT);
@@ -157,6 +170,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         gamePanel.setBackground(BACKGROUND_COLOUR);
 //        gamePanel.setLayout(null);
 
+        initGameBoardPanel();
         initializeBoard();
 
         mainPanel.add(gamePanel, "game");
@@ -172,8 +186,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         board.shufflePanels();
 
         setUpPanelBoard();
-
-//        doSmt();
+        doSmt();
 
 
     }
@@ -185,7 +198,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
             try {
                 String input = JOptionPane.showInputDialog("Enter the number of rows you'd like (MAX: 4)");
                 rows = Integer.parseInt(input);
-                if (rows > 4 || rows <= 0) {
+                if (rows > 5 || rows <= 0) {
                     throw new NumberFormatException();
                 }
                 keepGoing = false;
@@ -226,22 +239,71 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
 
             CardPanel cardPanel = new CardPanel(this);
             cardPanels.add(cardPanel);
-            gamePanel.add(cardPanels.get(i));
+            gameBoardPanel.add(cardPanels.get(i));
 
         }
 
 
     }
 
-//    private void doSmt() {
-//        JLabel smt = new JLabel("Hello");
-//
-//        smt.setBounds(50,200,200,50);
-//        smt.setFont(new Font("Spectre", Font.PLAIN,50));
-//        smt.setForeground(TITLE_COLOUR);
-//
-//        gamePanel.add(smt);
-//    }
+
+    private void initGameBoardPanel() {
+        gameBoardPanel = new JPanel();
+        gamePanel.setLayout(null);
+        gameBoardPanel.setLayout(new GridLayout(5,1, 30, 30));
+        gameBoardPanel.setBackground(BACKGROUND_COLOUR);
+        gameBoardPanel.setBounds(35,100,700,400);
+
+
+        gamePanel.add(gameBoardPanel);
+
+    }
+
+    // change to timer?
+    private void doSmt() {
+        JLabel smt = new JLabel("Solve!");
+
+        smt.setBounds(300,30,200,50);
+        smt.setFont(new Font("Spectre", Font.PLAIN,50));
+        smt.setForeground(TITLE_COLOUR);
+
+        gamePanel.add(smt);
+    }
+
+
+    public void isGameOver() {
+        if (board.isComplete()) {
+            gameWonPanel();
+            mainPanel.add(endGamePanel, "game won");
+            cl.show(mainPanel, "game won");
+
+        } else {
+            // CONTINUE GAME
+        }
+    }
+
+    private void gameWonPanel() {
+        endGamePanel = new JPanel();
+
+        BufferedImage image;
+        ImageIcon icon;
+
+        try {
+            image = ImageIO.read(new File(".\\data\\winning-image.jpg"));
+
+            icon = new ImageIcon(image);
+
+            JLabel jl = new JLabel();
+            jl.setPreferredSize(new Dimension(800,800));
+            jl.setIcon(icon);
+            jl.setHorizontalAlignment(JLabel.CENTER);
+            endGamePanel.add(jl);
+
+
+        } catch (IOException e) {
+            System.out.println("Image not found!"); // only display in console
+        }
+    }
 
 
 

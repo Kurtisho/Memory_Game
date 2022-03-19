@@ -38,7 +38,7 @@ public class Board implements Writable {
     //MODIFIES: this and panel
     //EFFECTS: reveals the panel value
     public void revealPanel(Integer pos) {
-        Panel panel = panelList.get(pos); // gets element at chosen pos
+        Panel panel = panelList.get(pos - 1); // gets element at chosen pos
         panel.setIsFlipped(true);
     }
 
@@ -70,14 +70,18 @@ public class Board implements Writable {
 
     //MODIFIES: this and Panel
     //EFFECTS: checks if pair is matching
-    public void isMatching(Integer firstPick, Integer secondPick) {
-        Panel firstPanel = panelList.get(firstPick);
-        Panel secondPanel = panelList.get(secondPick);
+    public boolean isMatching(Integer firstPick, Integer secondPick) {
+        Panel firstPanel = panelList.get(firstPick - 1);
+        Panel secondPanel = panelList.get(secondPick - 1);
 
         if (!firstPanel.getLetter().equals(secondPanel.getLetter())) {
             firstPanel.setIsFlipped(false);
             secondPanel.setIsFlipped(false);
+            return false;
+        } else {
+            return true;
         }
+
 
     }
 
