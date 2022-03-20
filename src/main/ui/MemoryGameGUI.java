@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class MemoryGameGUI extends JFrame implements ActionListener {
@@ -29,6 +30,8 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     private static final Color MAIN_MENU_BUT_COLOUR = new Color(86, 78, 78);
     private static final Font MENU_BUTTON_FONT = new Font("Spectre", Font.PLAIN, 50);
     private static final Dimension MAIN_MENU_BUT_DIM = new Dimension(500, 250);
+
+    private Timer playAgainDelay;
 
     private int rows;
 
@@ -48,6 +51,8 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
 
     private JPanel endGamePanel; // third action panel -> show winning image
 
+    private JPanel playTimePanel; // fourth action panel -> display playtimes
+
 
 
     private JFrame frame;
@@ -55,13 +60,15 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     private Board board;
     private ArrayList<CardPanel> cardPanels;
 
-
+    private ArrayList<Long> myProgress;
 
 
     // main menu
     public MemoryGameGUI() {
         cl = new CardLayout();
         frame = new JFrame(labelSmt);
+        myProgress = new ArrayList<>();
+
         frame.setSize(HUD_WIDTH,HUD_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // change later
         frame.setResizable(false);
@@ -94,7 +101,6 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
 
 
         mainPanel.add(mainMenuPanel, "menu");
-        System.out.println("Running!");
 
     }
 
@@ -112,7 +118,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         menuLayout = new JPanel();
         menuLayout.setLayout(MENU_LAYOUT);
         menuLayout.setBackground(BACKGROUND_COLOUR);
-        menuLayout.setBounds(160,200,500,400);
+        menuLayout.setBounds(140,200,500,400);
 
         newBoardButton();
         loadBoardButton();
@@ -196,7 +202,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         boolean keepGoing = true;
         while (keepGoing) {
             try {
-                String input = JOptionPane.showInputDialog("Enter the number of rows you'd like (MAX: 4)");
+                String input = JOptionPane.showInputDialog("Enter the number of rows you'd like (MAX: 5)");
                 rows = Integer.parseInt(input);
                 if (rows > 5 || rows <= 0) {
                     throw new NumberFormatException();
@@ -220,6 +226,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
 
         for (int i = 1; i < (board.getBoardSize() / 2) + 1; i++) {
             String input = JOptionPane.showInputDialog("Enter a letter you'd like!");
+            input = input.toUpperCase();
 
             Panel firstPanel = new Panel(input, board.getPanelList().size(), false);
             Panel secondPanel  = new Panel(input, board.getPanelList().size(), false);
@@ -243,6 +250,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
 
         }
 
+        board.startTime();
 
     }
 
@@ -259,7 +267,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
 
     }
 
-    // change to timer?
+
     private void doSmt() {
         JLabel smt = new JLabel("Solve!");
 
@@ -271,14 +279,22 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     }
 
 
-    public void isGameOver() {
+
+
+    public boolean isGameOver() {
         if (board.isComplete()) {
             gameWonPanel();
+            board.endTime();
+            addTime(board.getElapsed());
             mainPanel.add(endGamePanel, "game won");
             cl.show(mainPanel, "game won");
+            playAgain();
+
+            return true;
 
         } else {
             // CONTINUE GAME
+            return false;
         }
     }
 
@@ -305,7 +321,58 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         }
     }
 
+    private void playAgain() {
+        // TODO change delay time later
+        playAgainDelay = new Timer(1000, e -> {
+            int result = JOptionPane.showConfirmDialog(endGamePanel,"Want to play again?", "Play Again",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
 
+            if (result == JOptionPane.YES_OPTION) {
+                restartGame();
+            } else {
+                playTime();
+                cl.show(mainPanel, "play time");
+            }
+        });
+        playAgainDelay.setRepeats(false);
+        playAgainDelay.start();
+
+    }
+
+    private void restartGame() {
+        frame.getContentPane().removeAll();
+        frame.repaint();
+        mainMenuHUD();
+    }
+
+    private void addTime(long currentTime) {
+        currentTime /= 1000;
+        myProgress.add(currentTime);
+    }
+
+
+    private void playTime() {
+        playTimePanel = new JPanel();
+        playTimePanel.setBackground(BACKGROUND_COLOUR);
+
+        addPlayTime();
+
+        mainPanel.add(playTimePanel, "play time");
+    }
+
+    private void addPlayTime() {
+        for (int i = 0; i < myProgress.size(); i++) {
+            int run = i + 1;
+            String text = "\nPlay-through " + run + " : " + myProgress.get(i) + " seconds";
+            JLabel label = new JLabel(text);
+            label.setFont(new Font("Spectre", Font.PLAIN, 50));
+            label.setForeground(Color.white);
+            playTimePanel.add(label);
+            System.out.println("\nPlay-through " + run + " : " + myProgress.get(i) + " seconds");
+
+        }
+    }
 
 
 

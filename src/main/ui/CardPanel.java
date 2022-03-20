@@ -37,6 +37,7 @@ public class CardPanel extends JPanel {
         createPanelButtons(ui.getGameboard());
         setBackground(Color.orange);
 
+
     }
 
     // SOURCE: https://docs.oracle.com/javase/tutorial/uiswing/layout/grid.html
@@ -49,10 +50,10 @@ public class CardPanel extends JPanel {
 
             CardButton btn = new CardButton(panel);
 
-            btn.setFont(new Font("Spectre", Font.PLAIN, 75));
+            btn.setFont(new Font("Spectre", Font.PLAIN, 40));
             btn.setEnabled(true);
             btn.setBackground(Color.LIGHT_GRAY);
-            btn.setPreferredSize(new Dimension(50, 20));
+//            btn.setPreferredSize(new Dimension(50, 80));
 
 
             cardButtonActionListener(btn); // add button listeners for each card
@@ -90,7 +91,9 @@ public class CardPanel extends JPanel {
             ui.getGameboard().revealPanel(pos2);
 
             checkmatch();
-            ui.isGameOver();
+            if (ui.isGameOver()) {
+                cardIndex = 0;
+            }
             count = 0;
         }
 

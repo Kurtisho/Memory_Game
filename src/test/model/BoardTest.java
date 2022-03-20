@@ -67,7 +67,7 @@ public class BoardTest {
     @Test
     void testRevealPanel() {
         testBoard.getPanelList().add(new Panel("A",1,false));
-        testBoard.revealPanel(0);
+        testBoard.revealPanel(1);
         assertTrue(testBoard.getPanelList().get(0).getIsFlipped());
 
 
@@ -75,15 +75,17 @@ public class BoardTest {
 
     @Test
     void testIsNotMatching() {
-        Panel panel = new Panel("A", 1,false);
+        Panel panel = new Panel("A", 0,false);
         panel.setIsFlipped(true);
         testBoard.getPanelList().add(panel);
 
-        Panel panel2 = new Panel("B",3,false);
+        Panel panel2 = new Panel("B",1,false);
         panel2.setIsFlipped(true);
         testBoard.getPanelList().add(panel2);
 
-        testBoard.isMatching(0, 1);
+        boolean test = testBoard.isMatching(1,2);
+
+        assertFalse(test);
 
         assertFalse(panel.getIsFlipped());
         assertFalse(panel2.getIsFlipped());
@@ -92,18 +94,19 @@ public class BoardTest {
 
     @Test
     void testIsMatching() {
-        Panel panel = new Panel("A", 1,false);
+        Panel panel = new Panel("A", 0,false);
         panel.setIsFlipped(true);
         testBoard.getPanelList().add(panel);
 
-        Panel panel2 = new Panel("A",3,false);
+        Panel panel2 = new Panel("A",1,false);
         panel2.setIsFlipped(true);
         testBoard.getPanelList().add(panel2);
 
-        testBoard.isMatching(0, 1);
 
         assertTrue(panel.getIsFlipped());
         assertTrue(panel2.getIsFlipped());
+
+        assertTrue(testBoard.isMatching(1,2));
     }
 
     // Note: this can fail sometimes but it is 2/16 chance
