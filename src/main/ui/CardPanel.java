@@ -7,8 +7,6 @@ import model.Panel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class CardPanel extends JPanel {
 
@@ -105,7 +103,7 @@ public class CardPanel extends JPanel {
             btn1.setEnabled(false);
             btn2.setEnabled(false);
         } else {
-            timeDelay = new Timer(1000, e -> {
+            timeDelay = new Timer(500, e -> {
                 btn1.setText("?");
                 btn2.setText("?");
             });
@@ -114,23 +112,29 @@ public class CardPanel extends JPanel {
         }
     }
 
-
-//    // EFFECTS: if 2 buttons are clicked, disable all buttons
-//    public void disableButtons() {
-//        //SOURCE : https://stackoverflow.com/questions/18704904/swing-using-getcomponent-to-update-all-jbuttons/18705604
-//        for (Component component: this.getComponents()) {
-//
-//            if (component instanceof JButton) {
-//                CardButton btn = (CardButton) component;
-//                Panel panel = btn.getPanel();
-//                btn.setEnabled(false);
-//            }
-//        }
-//    }
+    public void setCardIndex(int index) {
+        cardIndex = index;
+    }
 
 
 
+    public void revealButtons() {
+        //SOURCE : https://stackoverflow.com/questions/18704904/swing-using-getcomponent-to-update-all-jbuttons/18705604
+        for (CardPanel cp : ui.getCardPanels()) {
+            cp.reveal();
+        }
+    }
 
+    private void reveal() {
+        for (Component component : this.getComponents()) {
+            if (component instanceof JButton) {
+                CardButton btn = (CardButton) component;
+                Panel panel = btn.getPanel();
+                btn.setEnabled(false);
+                btn.setText(panel.getLetter());
+            }
+        }
+    }
 
 
 }

@@ -12,7 +12,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
 
 
 public class MemoryGameGUI extends JFrame implements ActionListener {
@@ -52,6 +51,8 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     private JPanel endGamePanel; // third action panel -> show winning image
 
     private JPanel playTimePanel; // fourth action panel -> display playtimes
+
+    private JPanel playOptionPanel;
 
 
 
@@ -191,8 +192,10 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         designPanel(); // user designs letters in panel
         board.shufflePanels();
 
-        setUpPanelBoard();
-        doSmt();
+        setUpPanelBoard(); // setup panels for game
+        boardMessage(); // setup title of game panel
+        setUpPlayOptions(); // setup play options
+
 
 
     }
@@ -268,7 +271,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     }
 
 
-    private void doSmt() {
+    private void boardMessage() {
         JLabel smt = new JLabel("Solve!");
 
         smt.setBounds(300,30,200,50);
@@ -276,6 +279,62 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         smt.setForeground(TITLE_COLOUR);
 
         gamePanel.add(smt);
+    }
+
+    private void setUpPlayOptions() {
+        playOptionPanel = new JPanel();
+        playOptionPanel.setLayout(null);
+        playOptionPanel.setLayout(new GridLayout(1, 3, 50,80));
+        playOptionPanel.setBounds(0, 650, 800, 50); // reset later
+        playOptionPanel.setBackground(BACKGROUND_COLOUR);
+
+        initGiveUpBut();
+        initReshuffleBut();
+        initSaveBut();
+
+        gamePanel.add(playOptionPanel);
+
+    }
+
+    //give up button
+    private void initGiveUpBut() {
+        JButton revealBut = new JButton("Reveal");
+        revealBut.setBackground(MAIN_MENU_BUT_COLOUR);
+        revealBut.setForeground(TITLE_COLOUR);
+        revealBut.setFont(new Font("Spectre", Font.PLAIN, 30));
+
+        revealBut.setActionCommand("Reveal");
+        revealBut.addActionListener(this);
+
+        revealBut.setToolTipText("Reveal buttons for a moment");
+        playOptionPanel.add(revealBut);
+
+    }
+
+    private void initReshuffleBut() {
+        JButton reshuffleBut = new JButton("Reshuffle");
+        reshuffleBut.setBackground(MAIN_MENU_BUT_COLOUR);
+        reshuffleBut.setForeground(TITLE_COLOUR);
+        reshuffleBut.setFont(new Font("Spectre", Font.PLAIN, 30));
+
+        reshuffleBut.setActionCommand("Reshuffle");
+        reshuffleBut.addActionListener(this);
+
+        reshuffleBut.setToolTipText("Reshuffle the board");
+        playOptionPanel.add(reshuffleBut);
+    }
+
+    private void initSaveBut() {
+        JButton saveBut = new JButton("Save & Quit");
+        saveBut.setBackground(MAIN_MENU_BUT_COLOUR);
+        saveBut.setForeground(TITLE_COLOUR);
+        saveBut.setFont(new Font("Spectre", Font.PLAIN, 30));
+
+        saveBut.setActionCommand("Save");
+        saveBut.addActionListener(this);
+
+        saveBut.setToolTipText("Save the board");
+        playOptionPanel.add(saveBut);
     }
 
 
@@ -374,6 +433,27 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: reveals all buttons letters and ends game
+    private void revealButtons() {
+        CardPanel cardPanel = cardPanels.get(0);
+        cardPanel.revealButtons();
+    }
+
+    // EFFECTS: shuffles buttons
+    private void shuffleBoard() {
+        CardPanel cardPanel = cardPanels.get(0);
+        cardPanel.setCardIndex(0);
+
+        gameBoardPanel.removeAll();
+        gameBoardPanel.repaint();
+        board.shufflePanels();
+        setUpPanelBoard();
+
+        gameBoardPanel.validate();
+
+
+    }
+
 
 
 
@@ -389,6 +469,13 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
                 break;
             case "Quit Game":
                 System.out.println("Quitting Game");
+            case "Reveal" :
+                revealButtons();
+                break;
+            case "Reshuffle":
+                shuffleBoard();
+//                break;
+//            default: saveGameBoard();
         }
     }
 
@@ -397,4 +484,11 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     public Board getGameboard() {
         return board;
     }
+
+    public ArrayList<CardPanel> getCardPanels() {
+        return cardPanels;
+    }
+
 }
+
+
