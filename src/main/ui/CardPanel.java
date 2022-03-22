@@ -3,11 +3,10 @@ package ui;
 import model.Board;
 import model.Panel;
 
-
-
 import javax.swing.*;
 import java.awt.*;
 
+// represents CardPanel and buttons contained on the panel
 public class CardPanel extends JPanel {
 
     private static int cardIndex = 0;           // Counts from 0 - X amount of cards
@@ -28,16 +27,18 @@ public class CardPanel extends JPanel {
 
     private MemoryGameGUI ui;                   // to access board
 
+    // EFFECTS: creates panel layout
     public CardPanel(MemoryGameGUI ui) {
         this.ui = ui;
 
         setLayout(cardLayout);
         createPanelButtons(ui.getGameboard());
-        setBackground(Color.orange);
-
+        setBackground(new Color(36, 30, 30));
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates buttons for each panel
     // SOURCE: https://docs.oracle.com/javase/tutorial/uiswing/layout/grid.html
     private void createPanelButtons(Board gameBoard) {
         for (int i = 0; i < CARD_COLS; i++) {
@@ -49,30 +50,34 @@ public class CardPanel extends JPanel {
             CardButton btn = new CardButton(panel);
 
             btn.setFont(new Font("Spectre", Font.PLAIN, 40));
-            btn.setEnabled(true);
             btn.setBackground(Color.LIGHT_GRAY);
-//            btn.setPreferredSize(new Dimension(50, 80));
 
+            // for loading purposes
+            if (panel.getIsFlipped()) {
+                btn.setText(panel.getLetter());
+                btn.setEnabled(false);
+            } else {
+                btn.setEnabled(true);
+            }
 
             cardButtonActionListener(btn); // add button listeners for each card
 
             add(btn); // adds button to the panel
-
         }
     }
 
-    //EFFECTS:
+    // MODIFIES: this
+    //EFFECTS: Creates button listener
     private void cardButtonActionListener(CardButton btn) {
         btn.addActionListener(e -> {
-//            Panel panel = btn.getPanel();
-//            btn.setEnabled(false);            // if set to disabled, will grey out text.
             count++;
             System.out.println("Count: " + count);
             guess(btn);
         });
     }
 
-
+    // MODIFIES: this, board
+    // EFFECTS: registers the button clicks and assigns panels to them
     private void guess(CardButton btn) {
         // if clicks count is 2, disable all buttons
         if (count == 1) {
@@ -97,6 +102,7 @@ public class CardPanel extends JPanel {
 
     }
 
+    // MODIFIES: this, board
     //EFFECTS: checks if panel letters match, if not reset button and panel (card)
     private void checkmatch() {
         if (ui.getGameboard().isMatching(pos1, pos2)) {
@@ -112,12 +118,14 @@ public class CardPanel extends JPanel {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: Sets cardIndex to given index
     public void setCardIndex(int index) {
         cardIndex = index;
     }
 
-
-
+    // MODIFIES: this
+    // EFFECTS: reveals buttons
     public void revealButtons() {
         //SOURCE : https://stackoverflow.com/questions/18704904/swing-using-getcomponent-to-update-all-jbuttons/18705604
         for (CardPanel cp : ui.getCardPanels()) {
@@ -125,6 +133,8 @@ public class CardPanel extends JPanel {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets buttons to false and reveals letters
     private void reveal() {
         for (Component component : this.getComponents()) {
             if (component instanceof JButton) {

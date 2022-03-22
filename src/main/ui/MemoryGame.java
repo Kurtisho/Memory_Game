@@ -123,7 +123,6 @@ public class MemoryGame {
         System.out.println("1 - Not challenging, too easy for me");
 
         Scanner scan = new Scanner(System.in);
-        String input = scan.nextLine();
 
         System.out.println("Thank you for rating and playing the game! ");
         System.exit(0);
@@ -146,7 +145,6 @@ public class MemoryGame {
         currentTime /= 1000;
         myProgress.add(savedTime + currentTime);
     }
-
 
     //EFFECTS: displays the menu of the game
     public void displayMenu() {
@@ -174,8 +172,6 @@ public class MemoryGame {
         addTime(board.getElapsed(), board.getSavedTime());
         playAgain();
     }
-
-
 
     //MODIFIES: board
     //EFFECTS: Alters the board each time a pair is found
@@ -227,7 +223,6 @@ public class MemoryGame {
         }
     }
 
-
     //MODIFIES: this
     //EFFECTS: checks if input number is in range
     private Integer checkValidNumber(Integer pick) {
@@ -264,7 +259,6 @@ public class MemoryGame {
         }
         return pick;
     }
-
 
     //MODIFIES: this
     //EFFECTS: asks user if they would like to play again
