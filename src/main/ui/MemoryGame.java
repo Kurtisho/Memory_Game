@@ -79,9 +79,8 @@ public class MemoryGame {
             String input = scan2.nextLine().toUpperCase();
 
             Panel firstPanel = new Panel(input, board.getPanelList().size(), false);
-            Panel secondPanel = new Panel(input, board.getPanelList().size(), false);
-
             board.getPanelList().add(firstPanel);
+            Panel secondPanel = new Panel(input, board.getPanelList().size(), false);
             board.getPanelList().add(secondPanel);
 
         }
@@ -230,7 +229,7 @@ public class MemoryGame {
 
         while (numberInvalid) {
             if (1 <= pick && pick <= board.getBoardSize()) {
-                pick = notAlreadyEntered(pick - 1);
+                pick = notAlreadyEntered(pick);
                 numberInvalid = false;
             } else {
                 System.out.println("Invalid input given, Please enter a Number: ");
@@ -247,14 +246,14 @@ public class MemoryGame {
         Integer placeHolder;
         boolean alreadyEntered = true;
         while (alreadyEntered) {
-            if (!board.getPanelList().get(pick).getIsFlipped()) {
+            if (!board.getPanelList().get(pick - 1).getIsFlipped()) {
                 alreadyEntered = false;
 
             } else {
                 System.out.println("Already found this pair, enter another number: ");
                 Scanner scan = new Scanner(System.in);
                 placeHolder = scan.nextInt();
-                pick = placeHolder - 1;
+                pick = placeHolder;
             }
         }
         return pick;

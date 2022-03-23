@@ -250,9 +250,8 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
             input = input.toUpperCase();
 
             Panel firstPanel = new Panel(input, board.getPanelList().size(), false);
-            Panel secondPanel  = new Panel(input, board.getPanelList().size(), false);
-
             board.getPanelList().add(firstPanel);
+            Panel secondPanel  = new Panel(input, board.getPanelList().size(), false);
             board.getPanelList().add(secondPanel);
         }
     }
