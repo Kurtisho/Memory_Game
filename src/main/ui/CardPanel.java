@@ -79,25 +79,29 @@ public class CardPanel extends JPanel {
     // MODIFIES: this, board
     // EFFECTS: registers the button clicks and assigns panels to them
     private void guess(CardButton btn) {
-        // if clicks count is 2, disable all buttons
         if (count == 1) {
             firstPanel = btn.getPanel();
             btn1 = btn;
             pos1 = firstPanel.getPosition();
             btn.setText(firstPanel.getLetter());
             ui.getGameboard().revealPanel(pos1);
+            ui.getSaveBut().setEnabled(false);
         } else if (count == 2) {
             secondPanel = btn.getPanel();
-            btn2 = btn;
-            pos2 = secondPanel.getPosition();
-            btn.setText(secondPanel.getLetter());
-            ui.getGameboard().revealPanel(pos2);
-
-            checkmatch();
-            if (ui.isGameOver()) {
-                cardIndex = 0;
+            if (checkFirst(btn)) {
+                // do nothing
+            } else {
+                btn2 = btn;
+                pos2 = secondPanel.getPosition();
+                btn.setText(secondPanel.getLetter());
+                ui.getGameboard().revealPanel(pos2);
+                checkmatch();
+                if (ui.isGameOver()) {
+                    cardIndex = 0;
+                }
+                count = 0;
+                ui.getSaveBut().setEnabled(true);
             }
-            count = 0;
         }
 
     }
@@ -144,6 +148,18 @@ public class CardPanel extends JPanel {
                 btn.setText(panel.getLetter());
             }
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: checks if secondPanel is the same as the first selection
+    private boolean checkFirst(JButton btn) {
+        if (secondPanel == firstPanel) {
+            JOptionPane.showMessageDialog(this, "Select a different panel!");
+            count = 1;
+            secondPanel = null;
+            return true;
+        }
+        return false;
     }
 
 

@@ -64,6 +64,8 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
 
     private JPanel playOptionPanel;
 
+    private JButton saveBut;
+
     private JFrame frame;
 
     // Board components
@@ -82,10 +84,12 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         frame.setSize(HUD_WIDTH,HUD_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // change later
         frame.setResizable(false);
-        frame.setVisible(true);
 
         initDataPersistence();
         mainMenuHUD();
+
+        frame.setVisible(true);
+
 
     }
 
@@ -95,6 +99,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         mainPanel = new JPanel();
         mainPanel.setLayout(cl);
         frame.add(mainPanel);
+
         initMenu(); // makes the menu
 
         cl.show(mainPanel, "menu");
@@ -246,14 +251,33 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     private void designPanel() {
 
         for (int i = 1; i < (board.getBoardSize() / 2) + 1; i++) {
-            String input = JOptionPane.showInputDialog("Enter a letter you'd like!");
-            input = input.toUpperCase();
+            boolean keepGoing = true;
 
-            Panel firstPanel = new Panel(input, board.getPanelList().size(), false);
-            board.getPanelList().add(firstPanel);
-            Panel secondPanel  = new Panel(input, board.getPanelList().size(), false);
-            board.getPanelList().add(secondPanel);
+            while (keepGoing) {
+                String input = JOptionPane.showInputDialog("Enter a letter you'd like!");
+                input = input.toUpperCase();
+
+                if (checkLetter(input)) {
+                    // do nothing
+                } else {
+                    Panel firstPanel = new Panel(input, board.getPanelList().size(), false);
+                    board.getPanelList().add(firstPanel);
+                    Panel secondPanel = new Panel(input, board.getPanelList().size(), false);
+                    board.getPanelList().add(secondPanel);
+                    keepGoing = false;
+                }
+            }
         }
+    }
+
+    private boolean checkLetter(String input) {
+        for (Panel p : board.getPanelList()) {
+            if (input.equals(p.getLetter())) {
+                JOptionPane.showMessageDialog(this, "Enter a different letter!");
+                return true;
+            }
+        }
+        return false;
     }
 
     // MODIFIES: this
@@ -344,7 +368,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: Creates save button
     private void initSaveBut() {
-        JButton saveBut = new JButton("Save & Quit");
+        saveBut = new JButton("Save & Quit");
         saveBut.setBackground(MAIN_MENU_BUT_COLOUR);
         saveBut.setForeground(TITLE_COLOUR);
         saveBut.setFont(new Font("Spectre", Font.PLAIN, 30));
@@ -661,6 +685,11 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     // EFFECTS: returns list of CardPanel
     public ArrayList<CardPanel> getCardPanels() {
         return cardPanels;
+    }
+
+    // EFFECTS : returns save Button to disable / enable
+    public JButton getSaveBut() {
+        return saveBut;
     }
 
 }
