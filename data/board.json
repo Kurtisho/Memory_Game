@@ -1,47 +1,27 @@
 {
     "panels": [
         {
-            "Panel Letter": "C",
+            "Panel Letter": "S",
             "Position": 1,
             "Flipped Value": true
         },
         {
-            "Panel Letter": "B",
+            "Panel Letter": "H",
             "Position": 2,
             "Flipped Value": false
         },
         {
-            "Panel Letter": "C",
+            "Panel Letter": "S",
             "Position": 3,
             "Flipped Value": true
         },
         {
-            "Panel Letter": "A",
+            "Panel Letter": "H",
             "Position": 4,
-            "Flipped Value": false
-        },
-        {
-            "Panel Letter": "D",
-            "Position": 5,
-            "Flipped Value": true
-        },
-        {
-            "Panel Letter": "A",
-            "Position": 6,
-            "Flipped Value": false
-        },
-        {
-            "Panel Letter": "D",
-            "Position": 7,
-            "Flipped Value": true
-        },
-        {
-            "Panel Letter": "B",
-            "Position": 8,
             "Flipped Value": false
         }
     ],
-    "boardsize": 8,
+    "boardsize": 4,
     "name": "User's Board",
-    "time": 32580
+    "time": 11046
 }

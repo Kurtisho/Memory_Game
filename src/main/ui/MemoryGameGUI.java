@@ -91,6 +91,12 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         frame.setVisible(true);
 
 
+        frame.pack();
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(HUD_WIDTH,HUD_HEIGHT);
+        frame.setResizable(false);
+
     }
 
     // MODIFIES: this
@@ -206,7 +212,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         mainPanel.add(gamePanel, "game");
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, Board
     // EFFECTS: initializes the pairs and board panel
     private void initializeBoard() {
         if (board.getBoardSize() == 0) {
@@ -246,7 +252,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, Board
     // EFFECTS: creates panels for board
     private void designPanel() {
 
@@ -270,6 +276,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: checks if letter has already been entered
     private boolean checkLetter(String input) {
         for (Panel p : board.getPanelList()) {
             if (input.equals(p.getLetter())) {
@@ -380,6 +387,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         playOptionPanel.add(saveBut);
     }
 
+    // MODIFIES : this
     // EFFECTS: Checks if game is over
     public boolean isGameOver() {
         if (board.isComplete()) {
@@ -400,6 +408,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: displays winning image
+    // SOURCE IMAGE: https://www.dreamstime.com/pixel-art-bit-you-win-text-one-big-winner-golden-cup-white-background-isolated-vector-illustration-black-image184636815
     private void gameWonPanel() {
         endGamePanel = new JPanel();
 
@@ -574,6 +583,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: Displays thank you image at the end
+    // SOURCE IMAGE : https://www.dreamstime.com/thank-you-speech-bubble-bit-pixel-art-say-white-background-vector-illustration-image143707193
     private void thankYou() {
         JPanel thankYou = new JPanel();
 

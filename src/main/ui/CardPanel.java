@@ -37,7 +37,7 @@ public class CardPanel extends JPanel {
 
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, CardButton
     // EFFECTS: creates buttons for each panel
     // SOURCE: https://docs.oracle.com/javase/tutorial/uiswing/layout/grid.html
     private void createPanelButtons(Board gameBoard) {
@@ -66,7 +66,7 @@ public class CardPanel extends JPanel {
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, CardButton
     //EFFECTS: Creates button listener
     private void cardButtonActionListener(CardButton btn) {
         btn.addActionListener(e -> {
@@ -76,7 +76,7 @@ public class CardPanel extends JPanel {
         });
     }
 
-    // MODIFIES: this, board
+    // MODIFIES: this, Board
     // EFFECTS: registers the button clicks and assigns panels to them
     private void guess(CardButton btn) {
         if (count == 1) {
@@ -106,7 +106,7 @@ public class CardPanel extends JPanel {
 
     }
 
-    // MODIFIES: this, board
+    // MODIFIES: this, board, CardButton
     //EFFECTS: checks if panel letters match, if not reset button and panel (card)
     private void checkmatch() {
         if (ui.getGameboard().isMatching(pos1, pos2)) {
@@ -128,7 +128,7 @@ public class CardPanel extends JPanel {
         cardIndex = index;
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, CardButton
     // EFFECTS: reveals buttons
     public void revealButtons() {
         //SOURCE : https://stackoverflow.com/questions/18704904/swing-using-getcomponent-to-update-all-jbuttons/18705604
@@ -137,7 +137,7 @@ public class CardPanel extends JPanel {
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, CardButton
     // EFFECTS: sets buttons to false and reveals letters
     private void reveal() {
         for (Component component : this.getComponents()) {
