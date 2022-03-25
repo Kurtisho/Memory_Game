@@ -536,6 +536,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
 
     }
 
+
     // MODIFIES: this
     // EFFECTS: creates label for rating panel
     private void rateOptions() {
