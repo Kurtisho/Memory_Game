@@ -81,7 +81,6 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         frame = new JFrame(labelSmt);
         myProgress = new ArrayList<>();
 
-        frame.setSize(HUD_WIDTH,HUD_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // change later
         frame.setResizable(false);
 
