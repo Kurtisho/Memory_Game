@@ -71,7 +71,7 @@ public class CardPanel extends JPanel {
     private void cardButtonActionListener(CardButton btn) {
         btn.addActionListener(e -> {
             count++;
-            System.out.println("Count: " + count);
+//            System.out.println("Count: " + count);
             guess(btn);
         });
     }

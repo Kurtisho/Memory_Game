@@ -42,8 +42,34 @@ public class Board implements Writable {
         panel.setIsFlipped(true);
     }
 
+    //getter-
+    public long getElapsed() {
+        return elapsed;
+    }
 
-    //MODIFIES: this
+    public long getSavedTime() {
+        return savedTime;
+    }
+
+    public Integer getBoardSize() {
+        return boardSize;
+    }
+
+    public ArrayList<Panel> getPanelList() {
+        return panelList;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    //setter
+    public void setBoardSize(Integer size) {
+        boardSize = size;
+    }
+
+
+    //MODIFIES: this, EventLog
     //EFFECTS: shuffles panels and adds to panelList
     public void shufflePanels() {
         ArrayList<Panel> shuffledPanels = new ArrayList<>();
@@ -56,17 +82,9 @@ public class Board implements Writable {
             shuffledPanels.add(currentPanel);
         }
         panelList = shuffledPanels;
+        EventLog.getInstance().logEvent(new Event("The Board has been shuffled!"));
     }
 
-
-    //getter
-    public ArrayList<Panel> getPanelList() {
-        return panelList;
-    }
-
-    public String getName() {
-        return name;
-    }
 
     //MODIFIES: this and Panel
     //EFFECTS: checks if pair is matching
@@ -81,8 +99,6 @@ public class Board implements Writable {
         } else {
             return true;
         }
-
-
     }
 
     //MODIFIES: this
@@ -96,15 +112,24 @@ public class Board implements Writable {
         return true;
     }
 
-    //getter
-    public Integer getBoardSize() {
-        return boardSize;
+    // MODIFIES: this, EventLog
+    // EFFECTS: adds panel to board
+    public void addPanel(Panel panel) {
+        panelList.add(panel);
+        EventLog.getInstance()
+                .logEvent(new Event("Added panel: " + panel.getLetter() + " || board pos: "
+                        + (panel.getPosition() + 1)));
     }
 
-    //setter
-    public void setBoardSize(Integer size) {
-        boardSize = size;
+    // MODIFIES: this, EventLog
+    // EFFECTS: sets panel flipvalue to true
+    public void revealBoard() {
+        for (Panel p : panelList) {
+            p.setIsFlipped(true);
+        }
+        EventLog.getInstance().logEvent(new Event("The Board has been revealed, play-through is now over"));
     }
+
 
 
     //MODIFIES: this
@@ -122,15 +147,6 @@ public class Board implements Writable {
         return end;
     }
 
-    //getter-
-    public long getElapsed() {
-        return elapsed;
-    }
-
-    //getter
-    public long getSavedTime() {
-        return savedTime;
-    }
 
     //EFFECTS: stores parameters of board to JSON array
     @Override

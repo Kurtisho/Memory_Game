@@ -1,27 +1,107 @@
 {
     "panels": [
         {
-            "Panel Letter": "B",
+            "Panel Letter": "F",
             "Position": 1,
-            "Flipped Value": true
+            "Flipped Value": false
         },
         {
-            "Panel Letter": "A",
+            "Panel Letter": "C",
             "Position": 2,
             "Flipped Value": false
         },
         {
-            "Panel Letter": "B",
+            "Panel Letter": "G",
             "Position": 3,
-            "Flipped Value": true
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "C",
+            "Position": 4,
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "H",
+            "Position": 5,
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "D",
+            "Position": 6,
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "I",
+            "Position": 7,
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "B",
+            "Position": 8,
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "E",
+            "Position": 9,
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "I",
+            "Position": 10,
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "",
+            "Position": 11,
+            "Flipped Value": false
         },
         {
             "Panel Letter": "A",
-            "Position": 4,
+            "Position": 12,
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "H",
+            "Position": 13,
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "G",
+            "Position": 14,
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "E",
+            "Position": 15,
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "F",
+            "Position": 16,
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "A",
+            "Position": 17,
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "D",
+            "Position": 18,
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "B",
+            "Position": 19,
+            "Flipped Value": false
+        },
+        {
+            "Panel Letter": "",
+            "Position": 20,
             "Flipped Value": false
         }
     ],
-    "boardsize": 4,
+    "boardsize": 20,
     "name": "User's Board",
-    "time": 7169
+    "time": 3121
 }

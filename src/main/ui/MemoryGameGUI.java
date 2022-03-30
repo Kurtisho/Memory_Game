@@ -1,15 +1,18 @@
 package ui;
 
 import model.Board;
+import model.EventLog;
 import model.Panel;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import model.Event;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -28,7 +31,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     private static final Color BACKGROUND_COLOUR = new Color(36, 30, 30);
     private static final Font TITLE_FONT = new Font("Spectre", Font.PLAIN, 80);
     private static final Color TITLE_COLOUR = new Color(208, 200, 200);
-    private static final LayoutManager MENU_LAYOUT = new GridLayout(3,1,50,50);
+    private static final LayoutManager MENU_LAYOUT = new GridLayout(3, 1, 50, 50);
 
     private static final Color MAIN_MENU_BUT_COLOUR = new Color(86, 78, 78);
     private static final Font MENU_BUTTON_FONT = new Font("Spectre", Font.PLAIN, 50);
@@ -65,6 +68,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     private JPanel playOptionPanel;
 
     private JButton saveBut;
+    private JButton reshuffleBut;
 
     private JFrame frame;
 
@@ -81,20 +85,20 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         frame = new JFrame(labelSmt);
         myProgress = new ArrayList<>();
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // change later
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // change later
         frame.setResizable(false);
 
         initDataPersistence();
         mainMenuHUD();
 
-        frame.setVisible(true);
+//        frame.setVisible(true);
+        frameCloseBehaviour();
 
 
         frame.pack();
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(HUD_WIDTH,HUD_HEIGHT);
-        frame.setResizable(false);
+        frame.setSize(HUD_WIDTH, HUD_HEIGHT);
+//        frame.setResizable(false);
 
     }
 
@@ -130,7 +134,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         title.setFont(TITLE_FONT);
         title.setForeground(TITLE_COLOUR);
         title.setHorizontalAlignment(JLabel.CENTER);
-        title.setBounds(100,50,550,100);
+        title.setBounds(100, 50, 550, 100);
         mainMenuPanel.add(title);
 
     }
@@ -141,7 +145,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         menuLayout = new JPanel();
         menuLayout.setLayout(MENU_LAYOUT);
         menuLayout.setBackground(BACKGROUND_COLOUR);
-        menuLayout.setBounds(140,250,500,400);
+        menuLayout.setBounds(140, 250, 500, 400);
 
         newBoardButton();
         loadBoardButton();
@@ -266,9 +270,9 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
                     // do nothing
                 } else {
                     Panel firstPanel = new Panel(input, board.getPanelList().size(), false);
-                    board.getPanelList().add(firstPanel);
+                    board.addPanel(firstPanel);
                     Panel secondPanel = new Panel(input, board.getPanelList().size(), false);
-                    board.getPanelList().add(secondPanel);
+                    board.addPanel(secondPanel);
                     keepGoing = false;
                 }
             }
@@ -304,9 +308,9 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     private void initGameBoardPanel() {
         gameBoardPanel = new JPanel();
         gamePanel.setLayout(null);
-        gameBoardPanel.setLayout(new GridLayout(5,1, 30, 30));
+        gameBoardPanel.setLayout(new GridLayout(5, 1, 30, 30));
         gameBoardPanel.setBackground(BACKGROUND_COLOUR);
-        gameBoardPanel.setBounds(35,100,700,400);
+        gameBoardPanel.setBounds(35, 100, 700, 400);
 
         gamePanel.add(gameBoardPanel);
     }
@@ -316,8 +320,8 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     private void boardMessage() {
         JLabel smt = new JLabel("Solve!");
 
-        smt.setBounds(300,30,200,50);
-        smt.setFont(new Font("Spectre", Font.PLAIN,50));
+        smt.setBounds(300, 30, 200, 50);
+        smt.setFont(new Font("Spectre", Font.PLAIN, 50));
         smt.setForeground(TITLE_COLOUR);
 
         gamePanel.add(smt);
@@ -328,7 +332,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     private void setUpPlayOptions() {
         playOptionPanel = new JPanel();
         playOptionPanel.setLayout(null);
-        playOptionPanel.setLayout(new GridLayout(1, 3, 50,80));
+        playOptionPanel.setLayout(new GridLayout(1, 3, 50, 80));
         playOptionPanel.setBounds(0, 650, 800, 50); // reset later
         playOptionPanel.setBackground(BACKGROUND_COLOUR);
 
@@ -359,7 +363,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: Creates Shuffle button
     private void initReshuffleBut() {
-        JButton reshuffleBut = new JButton("Reshuffle");
+        reshuffleBut = new JButton("Reshuffle");
         reshuffleBut.setBackground(MAIN_MENU_BUT_COLOUR);
         reshuffleBut.setForeground(TITLE_COLOUR);
         reshuffleBut.setFont(new Font("Spectre", Font.PLAIN, 30));
@@ -420,7 +424,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
             icon = new ImageIcon(image);
 
             JLabel jl = new JLabel();
-            jl.setPreferredSize(new Dimension(800,800));
+            jl.setPreferredSize(new Dimension(800, 800));
             jl.setIcon(icon);
             jl.setHorizontalAlignment(JLabel.CENTER);
             endGamePanel.add(jl);
@@ -433,7 +437,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     // EFFECTS: Gives player opportunity to play again
     private void playAgain() {
         playAgainDelay = new Timer(1000, e -> {
-            int result = JOptionPane.showConfirmDialog(endGamePanel,"Want to play again?", "Play Again",
+            int result = JOptionPane.showConfirmDialog(endGamePanel, "Want to play again?", "Play Again",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE);
 
@@ -498,13 +502,19 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     private void revealButtons() {
         CardPanel cardPanel = cardPanels.get(0);
         cardPanel.revealButtons();
+
+        board.revealBoard();
+
+        reshuffleBut.setEnabled(false);
+        saveBut.setEnabled(false);
+        resetCardIndex();
+        playAgain();
     }
 
     // MODIFIES: this
     // EFFECTS: shuffles buttons
     private void shuffleBoard() {
-        CardPanel cardPanel = cardPanels.get(0);
-        cardPanel.setCardIndex(0);
+        resetCardIndex();
 
         gameBoardPanel.removeAll();
         gameBoardPanel.repaint();
@@ -514,13 +524,19 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
         gameBoardPanel.validate();
     }
 
+    // MODIFIES: CardPanel
+    private void resetCardIndex() {
+        CardPanel cardPanel = cardPanels.get(0);
+        cardPanel.setCardIndex(0);
+    }
+
     // MODIFIES: this
     // EFFECTS: creates rating panel
     private void rateGame() {
         ratePanel = new JPanel();
         ratePanel.setBackground(BACKGROUND_COLOUR);
         ratePanel.setLayout(null);
-        ratePanel.setLayout(new GridLayout(5,1,80,25));
+        ratePanel.setLayout(new GridLayout(5, 1, 80, 25));
 
         rateOptions();
 
@@ -554,11 +570,16 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     // EFFECTS : returns string for label
     private String getLabelOption(int i) {
         switch (i) {
-            case 1 : return "5 - Best game ever!";
-            case 2: return "4 - It was really fun";
-            case 3 : return "3 - It was alright";
-            case 4: return "2 - Challenged me a little";
-            default: return "1 - Not challenging, too easy for me";
+            case 1:
+                return "5 - Best game ever!";
+            case 2:
+                return "4 - It was really fun";
+            case 3:
+                return "3 - It was alright";
+            case 4:
+                return "2 - Challenged me a little";
+            default:
+                return "1 - Not challenging, too easy for me";
         }
     }
 
@@ -596,7 +617,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
             icon = new ImageIcon(image);
 
             JLabel jl = new JLabel();
-            jl.setPreferredSize(new Dimension(800,800));
+            jl.setPreferredSize(new Dimension(800, 800));
             jl.setIcon(icon);
             jl.setHorizontalAlignment(JLabel.CENTER);
             thankYou.add(jl);
@@ -614,6 +635,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     private void showFinal() {
         cl.show(mainPanel, "final");
         Timer delay = new Timer(3000, e -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)));
+        displayLog();
         delay.setRepeats(false);
         delay.start();
     }
@@ -630,7 +652,30 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     private void saveGame() {
         board.endTime();
         saveGameBoard();
-        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+        displayLog();
+        frame.dispose();
+
+    }
+
+    private void frameCloseBehaviour() {
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                displayLog();
+                frame.dispose();
+            }
+
+        });
+    }
+
+    // MODIFIES: EventLog
+    // EFFECTS: prints the events to console
+    private void displayLog() {
+        EventLog log = EventLog.getInstance();
+
+        for (Event e : log) {
+            System.out.println(e.toString() + "\n");
+        }
     }
 
     // MODIFIES: this
@@ -665,7 +710,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "Create Board" :
+            case "Create Board":
                 board = new Board("User's Board", 0, 0);
                 setGamePanel();
                 cl.show(mainPanel, "game");
@@ -674,15 +719,16 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
                 loadBoard();
                 break;
             case "Quit Game":
-                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                frame.dispose();
                 break;
-            case "Reveal" :
+            case "Reveal":
                 revealButtons();
                 break;
             case "Reshuffle":
                 shuffleBoard();
                 break;
-            default: saveGame();
+            default:
+                saveGame();
         }
     }
 

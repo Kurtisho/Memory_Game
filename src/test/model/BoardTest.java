@@ -126,6 +126,33 @@ public class BoardTest {
     }
 
     @Test
+    void testAddPanel() {
+        assertEquals(0, testBoard.getPanelList().size());
+        testBoard.addPanel(new Panel("A", 1, false));
+
+        assertEquals(1, testBoard.getPanelList().size());
+
+        testBoard.addPanel(new Panel("B", 2, false));
+
+        assertEquals(2, testBoard.getPanelList().size());
+    }
+
+    @Test
+    void testRevealBoard() {
+        testBoard.addPanel(new Panel("A", 1, false));
+        assertEquals(1, testBoard.getPanelList().size());
+
+        Panel test = testBoard.getPanelList().get(0);
+        assertFalse(test.getIsFlipped());
+
+        testBoard.revealBoard();
+
+        assertTrue(test.getIsFlipped());
+
+
+    }
+
+    @Test
     void testSetBoardSize() {
         testBoard.setBoardSize(16);
         assertEquals(16, testBoard.getBoardSize());

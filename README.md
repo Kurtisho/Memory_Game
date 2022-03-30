@@ -38,3 +38,27 @@ who can achieve the fastest time.
 - As a user, when I start the application, I want to be able to load my board from the last time I played.
 
 
+## Phase 4 : Task 2
+
+Wed Mar 30 13:10:06 PDT 2022
+Added panel: A || board pos: 1
+
+Wed Mar 30 13:10:06 PDT 2022
+Added panel: A || board pos: 2
+
+Wed Mar 30 13:10:06 PDT 2022
+Added panel: B || board pos: 3
+
+Wed Mar 30 13:10:06 PDT 2022
+Added panel: B || board pos: 4
+
+Wed Mar 30 13:10:06 PDT 2022
+The Board has been shuffled!
+
+Wed Mar 30 13:10:10 PDT 2022
+The Board has been shuffled!
+
+Wed Mar 30 13:10:08 PDT 2022
+The Board has been revealed, play-through is now over
+
+

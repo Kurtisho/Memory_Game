@@ -72,6 +72,6 @@ public class JsonReader {
         Integer position = jsonObject.getInt("Position");
         Boolean flippedValue = jsonObject.getBoolean("Flipped Value");
         Panel p = new Panel(panelLetter, position, flippedValue);
-        board.getPanelList().add(p);
+        board.addPanel(p);
     }
 }
