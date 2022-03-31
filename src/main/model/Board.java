@@ -21,6 +21,8 @@ public class Board implements Writable {
     private long end;
     private long elapsed;
 
+    private int count;
+
     private long savedTime;
 
 
@@ -82,7 +84,10 @@ public class Board implements Writable {
             shuffledPanels.add(currentPanel);
         }
         panelList = shuffledPanels;
-        EventLog.getInstance().logEvent(new Event("The Board has been shuffled!"));
+        count++;
+        if (count > 1) {
+            EventLog.getInstance().logEvent(new Event("The Board has been shuffled!"));
+        }
     }
 
 
@@ -109,6 +114,7 @@ public class Board implements Writable {
                 return false;
             }
         }
+        EventLog.getInstance().logEvent(new Event("Game won!"));
         return true;
     }
 
@@ -118,7 +124,7 @@ public class Board implements Writable {
         panelList.add(panel);
         EventLog.getInstance()
                 .logEvent(new Event("Added panel: " + panel.getLetter() + " || board pos: "
-                        + (panel.getPosition() + 1)));
+                        + (panel.getPosition())));
     }
 
     // MODIFIES: this, EventLog
@@ -127,7 +133,7 @@ public class Board implements Writable {
         for (Panel p : panelList) {
             p.setIsFlipped(true);
         }
-        EventLog.getInstance().logEvent(new Event("The Board has been revealed, play-through is now over"));
+        EventLog.getInstance().logEvent(new Event("The Board has been revealed, Game Over!"));
     }
 
 

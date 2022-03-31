@@ -269,9 +269,9 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
                 if (checkLetter(input)) {
                     // do nothing
                 } else {
-                    Panel firstPanel = new Panel(input, board.getPanelList().size(), false);
+                    Panel firstPanel = new Panel(input, board.getPanelList().size() + 1,false);
                     board.addPanel(firstPanel);
-                    Panel secondPanel = new Panel(input, board.getPanelList().size(), false);
+                    Panel secondPanel = new Panel(input, board.getPanelList().size() + 1, false);
                     board.addPanel(secondPanel);
                     keepGoing = false;
                 }
@@ -634,7 +634,7 @@ public class MemoryGameGUI extends JFrame implements ActionListener {
     // EFFECTS: Switches card layout to final
     private void showFinal() {
         cl.show(mainPanel, "final");
-        Timer delay = new Timer(3000, e -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)));
+        Timer delay = new Timer(3000, e -> frame.dispose());
         displayLog();
         delay.setRepeats(false);
         delay.start();
