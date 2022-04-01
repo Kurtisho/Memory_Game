@@ -77,4 +77,4 @@ If I had more time, I would :
 - create an exceptions folder and incorporate exceptions instead of checking user inputs manually
 
 
-NOTE: the MemoryGame class in the ui folder has the same associations as the GUI class except for the association to CardPanel.
+NOTE: the MemoryGame class in the ui folder has the same associations as the GUI class except for the association with CardPanel.

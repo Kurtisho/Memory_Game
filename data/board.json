@@ -1,27 +1,27 @@
 {
     "panels": [
         {
-            "Panel Letter": "A",
+            "Panel Letter": "K",
             "Position": 1,
             "Flipped Value": false
         },
         {
-            "Panel Letter": "B",
+            "Panel Letter": "L",
             "Position": 2,
-            "Flipped Value": false
+            "Flipped Value": true
         },
         {
-            "Panel Letter": "B",
+            "Panel Letter": "K",
             "Position": 3,
             "Flipped Value": false
         },
         {
-            "Panel Letter": "A",
+            "Panel Letter": "L",
             "Position": 4,
-            "Flipped Value": false
+            "Flipped Value": true
         }
     ],
     "boardsize": 4,
     "name": "User's Board",
-    "time": 2420
+    "time": 11230
 }
