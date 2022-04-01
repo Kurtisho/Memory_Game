@@ -58,7 +58,7 @@ Added panel: B || board pos: 4
 Thu Mar 31 17:21:02 PDT 2022 \
 The Board has been shuffled!
 
-Thu Mar 31 17:21:02 PDT 2022 \ 
+Thu Mar 31 17:21:02 PDT 2022  
 The Board has been shuffled!
 
 Thu Mar 31 17:21:03 PDT 2022 \
@@ -67,9 +67,14 @@ The Board has been revealed, Game Over!
 ## Phase 4 : Task 3
 ___
 
-If I was given more time to work on this project, I would :
+Overall, I am satisfied with how my project has turned out. I believe my UML diagram clearly conveys how the board and panels are associated with one another and
+how they are incorporated in the final GUI class. However, there is room for improvement.
+If I had more time, I would :
 
 - reduce code duplication within the ui class by refactoring common methods.
 - create a superclass for the JPanels and JButtons used in the main menu.
 - create a superclass for the JPanels used in new CardLayouts to reduce the redundancy when a new panel is created
+- create an exceptions folder and incorporate exceptions instead of checking user inputs manually
 
+
+NOTE: the MemoryGame class in the ui folder has the same associations as the GUI class except for the association to CardPanel.
