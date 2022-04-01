@@ -116,12 +116,16 @@ public class BoardTest {
             testBoard.getPanelList().add(panel);
         }
         Panel testPanel = testBoard.getPanelList().get(5);
-        testBoard.shufflePanels();
+        testBoard.shufflePanels(); // count == 1
         assertEquals(16, testBoard.getPanelList().size());
 
         Panel testPanel2 = testBoard.getPanelList().get(5);
 
         assertNotEquals(testPanel, testPanel2);
+
+        int testCount = testBoard.shufflePanels();
+
+        assertEquals(2, testCount);
 
     }
 

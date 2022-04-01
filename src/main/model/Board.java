@@ -73,7 +73,7 @@ public class Board implements Writable {
 
     //MODIFIES: this, EventLog
     //EFFECTS: shuffles panels and adds to panelList
-    public void shufflePanels() {
+    public int shufflePanels() {
         ArrayList<Panel> shuffledPanels = new ArrayList<>();
         Random random = new Random();
         int index;
@@ -88,6 +88,8 @@ public class Board implements Writable {
         if (count > 1) {
             EventLog.getInstance().logEvent(new Event("The Board has been shuffled!"));
         }
+
+        return count;
     }
 
 
