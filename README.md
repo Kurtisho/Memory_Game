@@ -18,6 +18,7 @@ For instance :
 
 
 ## Interests
+___
 
 The reason why I chose to design a memory game was because this was the game
 I grew up playing with. My cousins and I loved playing this game because 
@@ -27,6 +28,7 @@ who can achieve the fastest time.
 
 
 ## User Stories
+___
 
 - As a user, I want to be able to play the game as long as I'd like
 - As a user, I want to be able to see the time spent per game after I quit
@@ -39,26 +41,35 @@ who can achieve the fastest time.
 
 
 ## Phase 4 : Task 2
+___
 
-Wed Mar 30 13:10:06 PDT 2022
+Thu Mar 31 17:20:59 PDT 2022 \
 Added panel: A || board pos: 1
 
-Wed Mar 30 13:10:06 PDT 2022
+Thu Mar 31 17:20:59 PDT 2022 \
 Added panel: A || board pos: 2
 
-Wed Mar 30 13:10:06 PDT 2022
+Thu Mar 31 17:20:59 PDT 2022 \
 Added panel: B || board pos: 3
 
-Wed Mar 30 13:10:06 PDT 2022
+Thu Mar 31 17:20:59 PDT 2022 \
 Added panel: B || board pos: 4
 
-Wed Mar 30 13:10:06 PDT 2022
+Thu Mar 31 17:21:02 PDT 2022 \
 The Board has been shuffled!
 
-Wed Mar 30 13:10:10 PDT 2022
+Thu Mar 31 17:21:02 PDT 2022 \ 
 The Board has been shuffled!
 
-Wed Mar 30 13:10:08 PDT 2022
-The Board has been revealed, play-through is now over
+Thu Mar 31 17:21:03 PDT 2022 \
+The Board has been revealed, Game Over!
 
+## Phase 4 : Task 3
+___
+
+If I was given more time to work on this project, I would :
+
+- reduce code duplication within the ui class by refactoring common methods.
+- create a superclass for the JPanels and JButtons used in the main menu.
+- create a superclass for the JPanels used in new CardLayouts to reduce the redundancy when a new panel is created
 
